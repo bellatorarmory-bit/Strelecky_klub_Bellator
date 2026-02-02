@@ -1,4 +1,8 @@
-/* 1. DEFINÍCIA FARIEB A PREMENNÝCH */
+/* --- 1. DEFINÍCIA FARIEB A PREMENNÝCH --- */
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --army-olive: #8a9a5b;      /* Bledšia olivová */
     --army-dark: #4b5320;       /* Tmavšia olivová */
@@ -8,7 +12,7 @@
     --text-secondary: #a0a0a0;  /* Sekundárny text */
 }
 
-/* 2. ZÁKLADNÉ NASTAVENIA */
+/* --- 2. ZÁKLADNÉ NASTAVENIA --- */
 body {
     background-color: var(--dark-bg);
     color: var(--text-primary);
@@ -16,47 +20,162 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
+    overflow-x: hidden;
 }
 
-/* 3. HLAVIČKA */
-header {
-    text-align: center;
-    padding: 60px 20px;
-    border-bottom: 1px solid #2a2a2a;
+/* --- 3. NAVIGÁCIA --- */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(18, 18, 18, 0.95);
+    z-index: 3000;
+    border-bottom: 1px solid var(--army-olive);
 }
 
-header h1 {
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.logo {
     font-family: 'Arial Black', sans-serif;
-    font-size: 3rem;
-    margin: 0;
-    letter-spacing: 2px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
     text-transform: uppercase;
-    color: #ffffff;
+    letter-spacing: 2px;
 }
 
-header h1 span {
+.logo span {
     color: var(--army-olive);
 }
 
-.subtitle {
-    color: var(--text-secondary);
-    letter-spacing: 4px;
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    margin-left: 25px;
     font-size: 0.85rem;
-    margin-top: 5px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    transition: 0.3s;
     text-transform: uppercase;
 }
 
-/* 4. MRIEŽKA S KURZAMI */
+.nav-links a:hover {
+    color: var(--army-olive);
+}
+
+/* --- 4. HERO SEKCIA --- */
+.hero {
+    height: 100vh;
+    background: url('img/tvoja-fotka.jpg') no-repeat center center/cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    color: white;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 900px;
+    padding: 0 20px;
+}
+
+.hero h1 {
+    font-family: 'Arial Black', sans-serif;
+    font-size: clamp(2.2rem, 8vw, 4.5rem);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+}
+
+.hero h1 span {
+    color: var(--army-olive);
+}
+
+.hero .subtitle {
+    color: var(--text-secondary);
+    letter-spacing: 4px;
+    font-size: clamp(0.7rem, 2vw, 1rem);
+    margin-top: 10px;
+    text-transform: uppercase;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+/* --- 5. TLAČIDLÁ --- */
+.btn-main, button {
+    background: var(--army-olive);
+    color: #121212 !important;
+    padding: 16px 35px;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 2px;
+    text-transform: uppercase;
+    transition: 0.3s;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.btn-main:hover, button:hover {
+    background: white;
+    color: #000 !important;
+}
+
+.btn-outline {
+    border: 1px solid white;
+    color: white !important;
+    padding: 16px 35px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-outline:hover {
+    background: white;
+    color: black !important;
+}
+
+/* --- 6. SEKCE A MRIEŽKA KURZOV --- */
+.section-title {
+    text-align: center;
+    margin: 80px 0 40px;
+    font-size: 2.2rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--army-olive);
+}
+
 .course-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 30px;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 50px 20px;
+    padding: 0 20px 80px;
 }
 
-/* 5. DIZAJN KARIET */
 .card {
     background-color: var(--card-bg);
     border: 1px solid #333;
@@ -101,187 +220,244 @@ header h1 span {
     margin-bottom: 25px;
 }
 
-/* 6. TLAČIDLÁ */
-button {
-    background-color: var(--army-olive);
-    color: #121212;
-    border: none;
-    padding: 14px;
-    width: 100%;
-    border-radius: 2px;
-    font-weight: bold;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 1px;
-}
-
-button:hover {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-/* 7. VYSKAKOVACIE OKNO (MODAL) */
+/* --- 7. VYSKAKOVACIE OKNO (MODAL) --- */
 .modal {
-    display: none; 
+    display: none; /* Nechaj LEN TENTO riadok */
     position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.9);
-    overflow: auto;
+    z-index: 5000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.95);
+    /* display: flex;  <-- TENTO RIADOK VYMAŽ ALEBO ZAKOMENTUJ */
+    align-items: center; 
+    justify-content: center;
 }
 
 .modal-content {
     background-color: var(--card-bg);
-    margin: 5% auto;
-    padding: 30px;
     border: 1px solid var(--army-olive);
-    width: 90%;
-    max-width: 850px;
-    border-radius: 4px;
+    width: 95%;
+    max-width: 1200px; 
+    height: 90vh; 
+    border-radius: 8px;
     position: relative;
-    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    box-shadow: 0 0 50px rgba(0,0,0,0.9);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-grid {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 }
 
 .close {
     position: absolute;
-    right: 20px;
-    top: 10px;
+    right: 25px;
+    top: 15px;
     color: #fff;
     font-size: 35px;
     font-weight: bold;
     cursor: pointer;
+    z-index: 1000;
 }
 
-.close:hover {
-    color: var(--army-olive);
+/* Ľavá strana */
+.modal-text {
+    flex: 1.5;
+    padding: 50px; 
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--army-olive) transparent;
 }
 
-/* 8. ROZLOŽENIE VNÚTRI MODALU */
-.modal-grid {
-    display: grid;
-    grid-template-columns: 1fr 280px;
-    gap: 25px;
-    margin-top: 20px;
+.modal-text h2 {
+    margin-top: 0;
+    margin-bottom: 30px;
+    color: #fff;
+    font-size: 2.2rem;
 }
 
 .modal-img-small {
     width: 100%;
-    height: 200px;
+    max-height: 400px;
     object-fit: cover;
     border-radius: 4px;
-    border: 1px solid var(--army-olive);
-    margin-bottom: 15px;
+    margin-bottom: 30px;
+    display: block;
+}
+
+/* Pravá strana - Info panel */
+.modal-info-panel {
+    flex: 1;
+    background: #111;
+    padding: 50px;
+    border-left: 1px solid #333;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 .modal-text h4 {
     color: var(--army-olive);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     text-transform: uppercase;
-    font-size: 0.95rem;
+    font-size: 1rem;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.modal-text ul {
-    padding-left: 20px;
-    font-size: 0.9rem;
-    color: #ccc;
-    margin-bottom: 20px;
-}
-
 .obsah-sekcia {
-    background: rgba(255,255,255,0.05);
-    padding: 12px;
-    margin-bottom: 8px;
+    background: rgba(255,255,255,0.03);
+    padding: 20px;
+    margin-bottom: 15px;
     border-radius: 4px;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     display: flex;
-    gap: 10px;
+    gap: 15px;
+    border-left: 4px solid var(--army-olive);
 }
 
 .obsah-sekcia i {
     color: var(--army-olive);
+    font-size: 1.1rem;
     margin-top: 3px;
 }
 
-.modal-info-panel {
-    background: #252525;
-    padding: 20px;
-    border-radius: 4px;
+/* --- MODERNÝ VÝBER TERMÍNOV (KARTY) --- */
+.info-box-modern {
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 6px;
     border-left: 3px solid var(--army-olive);
-    height: fit-content;
-}
-
-.info-box {
-    margin-bottom: 15px;
-    font-size: 0.9rem;
+    margin-bottom: 25px;
     display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: 15px;
 }
 
-.info-box i {
-    color: var(--army-olive);
-    margin-top: 4px;
-}
+.info-box-modern i { color: var(--army-olive); font-size: 1.2rem; }
 
-/* ŠTÝLY PRE REGISTRAČNÝ FORMULÁR */
-label {
-    display: block;
-    font-size: 0.8rem;
-    color: var(--army-olive);
+.select-title {
+    font-size: 0.85rem;
     text-transform: uppercase;
-    margin-top: 15px;
-    font-weight: bold;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    margin-bottom: 15px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="tel"],
-#termin-select {
+.terminy-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.termin-card {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    position: relative;
+}
+
+.termin-card:hover { border-color: #555; background: #222; }
+
+.termin-card.active {
+    border-color: var(--army-olive);
+    background: rgba(138, 154, 91, 0.08);
+}
+
+.termin-card.active::after {
+    content: '\f058';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 15px; top: 50%;
+    transform: translateY(-50%);
+    color: var(--army-olive);
+}
+
+.termin-card .date { font-weight: bold; color: #fff; }
+.termin-card .time { font-size: 0.8rem; color: var(--text-secondary); }
+.termin-card .slots { font-size: 0.75rem; margin-top: 5px; font-weight: bold; }
+
+/* --- MODERNÉ TLAČIDLO V MODALE --- */
+.btn-main-modern {
     width: 100%;
-    padding: 12px;
+    background: var(--army-olive);
+    color: #000 !important;
+    padding: 18px;
+    border: none;
+    border-radius: 4px;
+    font-weight: 900;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: 0.3s;
+    letter-spacing: 1px;
+}
+
+.btn-main-modern:hover { filter: brightness(1.1); transform: translateY(-2px); }
+
+.price-tag {
+    margin-top: auto;
+    text-align: center;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: #fff;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+}
+
+.price-tag span { font-size: 0.8rem; color: var(--text-secondary); font-weight: 400; }
+
+/* FORMULÁRE */
+input[type="text"], input[type="email"], input[type="tel"] {
+    width: 100%;
+    padding: 14px;
     background: #2a2a2a;
     color: white;
     border: 1px solid #444;
-    margin-top: 5px;
-    border-radius: 2px;
-    box-sizing: border-box; /* Dôležité pre šírku */
+    margin-top: 8px;
+    margin-bottom: 15px;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
-input:focus, #termin-select:focus {
-    border-color: var(--army-olive);
-    outline: none;
-}
-
-.cena-box {
-    margin-top: 20px;
-    font-size: 2rem;
-    font-weight: 800;
-    color: var(--army-olive);
-    text-align: center;
-    border-top: 1px solid #333;
-    padding-top: 15px;
-}
-
-/* 9. RESPONSIVITA */
-@media (max-width: 800px) {
+/* --- 8. RESPONSIVITA --- */
+@media (max-width: 1100px) {
+    .nav-links { display: none; } 
+    
     .modal-grid {
-        grid-template-columns: 1fr;
+        flex-direction: column;
+        overflow-y: auto;
     }
     
-    header h1 {
-        font-size: 2.2rem;
+    .modal-content {
+        width: 100%; height: 100vh;
+        border-radius: 0;
     }
 
-    .modal-content {
-        margin: 0;
-        width: 100%;
-        min-height: 100vh;
-        border: none;
+    .modal-text, .modal-info-panel {
+        padding: 30px 20px;
+        flex: none;
+    }
+
+    .modal-info-panel {
+        border-left: none;
+        border-top: 1px solid #333;
     }
 }

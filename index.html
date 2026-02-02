@@ -9,64 +9,124 @@
 </head>
 <body>
 
-    <header>
-        <h1>STRELECKÝ KLUB <span>BELLATOR</span></h1>
-        <p class="subtitle">REZERVAČNÝ SYSTÉM</p>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">SK <span>BELLATOR</span></a>
+            <div class="nav-links">
+                <a href="#kurzy">KURZY</a>
+                <a href="#sutaze">SÚŤAŽE</a>
+                <a href="javascript:void(0)" onclick="otvoritModalVseobecny('clenstvo')">ČLENSTVO</a>
+                <a href="javascript:void(0)" onclick="otvoritModalVseobecny('stanovy')">STANOVY</a>
+                <a href="#kontakt">KONTAKT</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1>STRELECKÝ KLUB <span>BELLATOR</span></h1>
+            <p class="subtitle">VÝCVIK A VZDELÁVANIE V OBLASTI STRELNÝCH ZBRANÍ</p>
+            <div class="hero-buttons">
+                <a href="#kurzy" class="btn-main">PONUKA KURZOV</a>
+                <a href="#kontakt" class="btn-outline">KONTAKTUJTE NÁS</a>
+            </div>
+        </div>
     </header>
 
-    <main class="course-grid">
-        <div class="card">
-            <div class="card-image" style="background-image: url('img/HS-zaklad.webp')"></div>
-            <div class="card-content">
-                <h3>Základný kurz a manipulácia</h3>
-                <p>Osvojte si bezpečné základy, legislatívu a prvý kontakt so zbraňou pod dohľadom odborníkov.</p>
-                <button onclick="otvoritDetail('zakladny')">Zobraziť detaily</button>
+    <main id="kurzy">
+        <h2 class="section-title">PONUKA ŠKOLENÍ</h2>
+        
+        <div class="course-grid">
+            <div class="card">
+                <div class="card-image" style="background-image: url('img/HS-zaklad.webp')"></div>
+                <div class="card-content">
+                    <h3>Základný kurz a manipulácia</h3>
+                    <p>Osvojte si bezpečné základy, legislatívu a prvý kontakt so zbraňou pod dohľadom odborníkov.</p>
+                    <button onclick="otvoritDetail('zakladny')">Zobraziť detaily</button>
+                </div>
             </div>
-        </div>
 
-        <div class="card">
-            <div class="card-image" style="background-image: url('img/HS-pomoc.png')"></div>
-            <div class="card-content">
-                <h3>Prvá pomoc - strelné poranenia</h3>
-                <p>Špeciálny kurz zameraný na masívne krvácanie a traumatické stavy v bojových podmienkach.</p>
-                <button onclick="otvoritDetail('prvapomoc')">Zobraziť detaily</button>
+            <div class="card">
+                <div class="card-image" style="background-image: url('img/HS-pomoc.png')"></div>
+                <div class="card-content">
+                    <h3>Prvá pomoc - strelné poranenia</h3>
+                    <p>Špeciálny kurz zameraný na masívne krvácanie a traumatické stavy v bojových podmienkach.</p>
+                    <button onclick="otvoritDetail('prvapomoc')">Zobraziť detaily</button>
+                </div>
             </div>
-        </div>
 
-        <div class="card">
-            <div class="card-image" style="background-image: url('img/HS-auto.jpg')"></div>
-            <div class="card-content">
-                <h3>Streľba z auta</h3>
-                <p>Dynamický nácvik eliminácie hrozby z vozidla a využitie auta ako krytu.</p>
-                <button onclick="otvoritDetail('auto')">Zobraziť detaily</button>
+            <div class="card">
+                <div class="card-image" style="background-image: url('img/HS-auto.jpg')"></div>
+                <div class="card-content">
+                    <h3>Streľba z auta</h3>
+                    <p>Dynamický nácvik eliminácie hrozby z vozidla a využitie auta ako krytu.</p>
+                    <button onclick="otvoritDetail('auto')">Zobraziť detaily</button>
+                </div>
             </div>
-        </div>
 
-        <div class="card">
-            <div class="card-image" style="background-image: url('img/HS-home.webp')"></div>
-            <div class="card-content">
-                <h3>Ochrana obydlia</h3>
-                <p>Zabezpečenie domova, taktika v uzavretých priestoroch a právne minimum sebaobrany.</p>
-                <button onclick="otvoritDetail('domov')">Zobraziť detaily</button>
+            <div class="card">
+                <div class="card-image" style="background-image: url('img/HS-home.webp')"></div>
+                <div class="card-content">
+                    <h3>Ochrana obydlia</h3>
+                    <p>Zabezpečenie domova, taktika v uzavretých priestoroch a právne minimum sebaobrany.</p>
+                    <button onclick="otvoritDetail('domov')">Zobraziť detaily</button>
+                </div>
             </div>
-        </div>
 
-        <div class="card">
-            <div class="card-image" style="background-image: url('img/HS-civil.jpg')"></div>
-            <div class="card-content">
-                <h3>Pripravenosť civilov</h3>
-                <p>Komplexná príprava na krízové situácie, evakuáciu a prežitie v mestskom prostredí.</p>
-                <button onclick="otvoritDetail('civil')">Zobraziť detaily</button>
+            <div class="card">
+                <div class="card-image" style="background-image: url('img/HS-civil.jpg')"></div>
+                <div class="card-content">
+                    <h3>Pripravenosť civilov</h3>
+                    <p>Komplexná príprava na krízové situácie, evakuáciu a prežitie v mestskom prostredí.</p>
+                    <button onclick="otvoritDetail('civil')">Zobraziť detaily</button>
+                </div>
             </div>
         </div>
     </main>
 
-    <div id="courseModal" class="modal">
+    <section id="sutaze" style="padding-bottom: 80px;">
+        <h2 class="section-title">STRELECKÉ SÚŤAŽE</h2>
+        <div class="course-grid">
+            <div class="card">
+                <div class="card-image" style="background-image: url('img/sutaz-klubova.jpg')"></div>
+                <div class="card-content">
+                    <h3>Klubová liga Bellator</h3>
+                    <p>Pravidelná súťaž pre členov aj verejnosť zameraná na dynamickú a mierenú streľbu.</p>
+                    <button onclick="otvoritDetail('sutaz_liga')">Viac informácií</button>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-image" style="background-image: url('img/sutaz-trauma.jpg')"></div>
+                <div class="card-content">
+                    <h3>Tactical Challenge</h3>
+                    <p>Súťaž spájajúca streľbu pod tlakom s prvkami taktickej medicíny a prekážkovou dráhou.</p>
+                    <button onclick="otvoritDetail('sutaz_tactical')">Viac informácií</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="kontakt" style="padding: 80px 20px; text-align: center; background: #161616;">
+        <h2 class="section-title">KONTAKT</h2>
+        <p>Email: info@bellator.sk | Tel: +421 9XX XXX XXX</p>
+        <p>Miesto výcviku: Strelnica Bellator Trenčín</p>
+    </section>
+
+    <div id="courseModal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close" onclick="zatvoritDetail()">&times;</span>
-            <h2 id="modalTitle"></h2>
-            <div id="modalDetails"></div>
-            <button class="btn-reserve" onclick="potvrditRezervaciu()">Potvrdiť rezerváciu</button>
+            <div class="modal-grid">
+                <div class="modal-text">
+                    <h2 id="modalTitle"></h2>
+                    <div id="modalImageContainer"></div> 
+                    <div id="modalDetails"></div>
+                </div>
+                
+                <div class="modal-info-panel" id="modalFormContainer">
+                    </div>
+            </div>
         </div>
     </div>
 
