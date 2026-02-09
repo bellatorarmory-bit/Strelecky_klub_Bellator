@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;600&family=Inter:wght@400;700&display=swap');
 /* --- 1. DEFINÍCIA FARIEB A PREMENNÝCH --- */
 html {
     scroll-behavior: smooth;
@@ -75,23 +77,43 @@ body {
     color: var(--army-olive) !important;
 }
 
+/* Kontajner pre odkazy */
 .nav-links {
     display: flex;
+    align-items: center; /* Vycentruje text vertikálne k navbaru */
 }
 
 .nav-links a {
-    color: white;
-    text-decoration: none;
-    margin-left: 25px;
-    font-size: 0.85rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    transition: 0.3s;
+    font-family: 'Rajdhani', sans-serif; /* Taktický vzhľad */
+    font-size: 1.1rem; /* Mierne zväčšenie */
+    font-weight: 600;
+    letter-spacing: 2px; /* Ešte viac "vzduchu" medzi písmenami */
+    color: #ffffff;
     text-transform: uppercase;
+    transition: all 0.3s ease;
+    padding: 10px 0;
+    margin-left: 35px; /* Väčšie medzery medzi položkami */
+}
+
+/* Efekt pri prejdení myšou - spodná linka */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%; /* Na začiatku je linka neviditeľná */
+    height: 2px;
+    background-color: var(--army-olive);
+    transition: 0.3s ease;
 }
 
 .nav-links a:hover {
-    color: var(--army-olive);
+    color: var(--army-olive); /* Text zmení farbu na olivovú */
+    letter-spacing: 3px; /* Jemná animácia rozstupu pri hoveri */
+}
+
+.nav-links a:hover::after {
+    width: 100%; /* Linka sa podčiarkne pri hoveri */
 }
 
 /* --- 4. HERO SEKCIA --- */
@@ -521,5 +543,64 @@ input[type="text"], input[type="email"], input[type="tel"] {
     .modal-info-panel {
         border-left: none;
         border-top: 1px solid #333;
+    }
+}
+/* 1. Zväčšíme celú lištu, aby sa do nej zmestila horná polka veľkého loga */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background: rgba(18, 18, 18, 0.95);
+    z-index: 3000;
+    /* Zelená linka */
+    border-bottom: 2px solid var(--army-olive); 
+    /* Musí byť dosť vysoká pre polovicu loga (ak má logo 200px, toto musí byť 100px) */
+    height: 100px; 
+    overflow: visible;
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /* Zarovnáme obsah (odkazy) na stred 100px lišty */
+    height: 100%; 
+    padding: 0 20px;
+}
+
+/* 2. Samotné logo */
+.nav-logo-img {
+    height: 200px; /* Ešte väčšie logo */
+    width: auto;
+    position: absolute;
+    left: 20px;
+    
+    /* VRCH LOGA bude presne na hornom okraji stránky */
+    top: 0; 
+    
+    /* Linka (border-bottom navbaru) bude v strede loga (keďže navbar má 100px a logo 200px) */
+    
+    filter: drop-shadow(0px 8px 15px rgba(0,0,0,0.7));
+    z-index: 4000;
+}
+
+/* 3. ODSADENIE SEKCIÍ - DÔLEŽITÉ */
+/* Keďže sme zväčšili navbar na 100px, musíme posunúť celý web nižšie, 
+   aby nám lišta neprekrývala začiatok stránky */
+body {
+    padding-top: 100px; 
+}
+@media (max-width: 768px) {
+    .navbar {
+        height: 60px;
+    }
+    .nav-logo-img {
+        height: 120px;
+        top: 0;
+    }
+    body {
+        padding-top: 60px;
     }
 }
