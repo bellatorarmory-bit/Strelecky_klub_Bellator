@@ -376,7 +376,7 @@ function otvoritModalVseobecny(typ) {
     <a href="docs/stanovy_bellator_info.pdf" target="_blank" class="btn-main-modern" style="text-decoration: none; width: 100%; display: flex; justify-content: center; align-items: center; background: var(--army-olive); color: #ffffff !important; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">
         <span>OTVORIŤ TEXT STANOV</span>
         <i class="fas fa-file-pdf" style="margin-left: 10px; color: #ffffff;"></i>
-    </a>
+    </a>    
 
     <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; text-transform: uppercase;">
         ZATVORIŤ
