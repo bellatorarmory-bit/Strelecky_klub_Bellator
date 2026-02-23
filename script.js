@@ -321,6 +321,7 @@ function otvoritModalVseobecny(typ) {
     const infoPanel = document.querySelector('.modal-info-panel');
 
     if (typ === 'stanovy') {
+        // --- SEKCIA STANOVY ---
         textPanel.innerHTML = `
             <div class="stanovy-header" style="border-bottom: 2px solid var(--army-olive); margin-bottom: 20px; padding-bottom: 10px;">
                 <h2 style="margin:0;">STANOVY</h2>
@@ -363,25 +364,90 @@ function otvoritModalVseobecny(typ) {
             </div>
         `;
 
-       infoPanel.innerHTML = `
-    <div class="info-box-modern" style="border-color: var(--army-olive); background: rgba(138, 154, 91, 0.1); padding: 15px; border-radius: 8px;">
-        <i class="fas fa-file-alt" style="color: #ffffff; font-size: 1.5rem; margin-bottom: 5px;"></i><br>
-        <span style="color: #ffffff;"><strong>Formát dokumentu:</strong><br>Informačný výpis</span>
-    </div>
-    
-    <p style="font-size: 0.9rem; color: #ffffff; margin: 20px 0; line-height: 1.4; text-align: center;">
-        Tento text slúži na oboznámenie sa s pravidlami klubu.
-    </p>
-    
-    <a href="docs/stanovy_bellator_info.pdf" target="_blank" class="btn-main-modern" style="text-decoration: none; width: 100%; display: flex; justify-content: center; align-items: center; background: var(--army-olive); color: #ffffff !important; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">
-        <span>OTVORIŤ TEXT STANOV</span>
-        <i class="fas fa-file-pdf" style="margin-left: 10px; color: #ffffff;"></i>
-    </a>    
+        infoPanel.innerHTML = `
+            <div class="info-box-modern" style="border-color: var(--army-olive); background: rgba(138, 154, 91, 0.1); padding: 15px; border-radius: 8px;">
+                <i class="fas fa-file-alt" style="color: #ffffff; font-size: 1.5rem; margin-bottom: 5px;"></i><br>
+                <span style="color: #ffffff;"><strong>Formát dokumentu:</strong><br>Informačný výpis</span>
+            </div>
+            
+            <p style="font-size: 0.9rem; color: #ffffff; margin: 20px 0; line-height: 1.4; text-align: center;">
+                Tento text slúži na oboznámenie sa s pravidlami klubu.
+            </p>
+            
+            <a href="docs/stanovy_bellator_info.pdf" target="_blank" class="btn-main-modern" style="text-decoration: none; width: 100%; display: flex; justify-content: center; align-items: center; background: var(--army-olive); color: #ffffff !important; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                <span>OTVORIŤ TEXT STANOV</span>
+                <i class="fas fa-file-pdf" style="margin-left: 10px; color: #ffffff;"></i>
+            </a>    
 
-    <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; text-transform: uppercase;">
-        ZATVORIŤ
-    </button>
-`;
+            <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; text-transform: uppercase;">
+                ZATVORIŤ
+            </button>
+        `;
+
+    } else if (typ === 'clenstvo') {
+        // --- SEKCIA ČLENSTVO ---
+        textPanel.innerHTML = `
+            <div class="stanovy-header" style="border-bottom: 2px solid var(--army-olive); margin-bottom: 20px; padding-bottom: 10px;">
+                <h2 style="margin:0; color: #ffffff;">ČLENSTVO V KLUBE</h2>
+                <p style="color: var(--army-olive); font-weight: bold; margin: 5px 0 0 0;">Strelecký klub Bellator o.z.</p>
+            </div>
+            
+            <div class="membership-content" style="color: #ffffff; line-height: 1.6; font-size: 0.95rem;">
+                <h4 style="color: var(--army-olive);"><i class="fas fa-clipboard-list"></i> AKO SA STAŤ ČLENOM:</h4>
+                <p>Proces prijatia za člena prebieha v súlade so stanovami združenia v nasledujúcich krokoch:</p>
+                
+                <ul style="list-style: none; padding-left: 0; margin-bottom: 25px;">
+                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                        <i class="fas fa-1" style="background: var(--army-olive); color: #000; padding: 5px 10px; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.8rem;"></i>
+                        <div><strong>Stiahnutie prihlášky:</strong> Stiahnite si tlačivo v pravom paneli a vyplňte požadované údaje.</div>
+                    </li>
+                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                        <i class="fas fa-2" style="background: var(--army-olive); color: #000; padding: 5px 10px; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.8rem;"></i>
+                        <div><strong>Osobné doručenie:</strong> Vyplnenú a podpísanú prihlášku je potrebné doručiť <strong>osobne</strong> do sídla klubu alebo na strelnicu.</div>
+                    </li>
+                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
+                        <i class="fas fa-3" style="background: var(--army-olive); color: #000; padding: 5px 10px; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.8rem;"></i>
+                        <div><strong>Schválenie a poplatok:</strong> Po doručení žiadosť prerokuje Výkonná rada. Po schválení a uhradení poplatku sa stávate členom.</div>
+                    </li>
+                </ul>
+
+                <h4 style="color: var(--army-olive); border-top: 1px solid #444; margin-top: 25px; padding-top: 15px;">
+                    <i class="fas fa-gavel"></i> ZÁPISNICE ZO ZASADNUTÍ:
+                </h4>
+                <div class="meeting-list" style="display: grid; gap: 10px; margin-top: 10px;">
+                    <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--army-olive);">
+                        <div>
+                            <span style="display: block; font-weight: bold;">Zápisnica z členskej schôdze</span>
+                            <span style="font-size: 0.8rem; color: #888;">Dátum: 18.02.2026 | Trenčín</span>
+                        </div>
+                        <a href="docs/zapisnica_2026_2_18.pdf" target="_blank" style="color: var(--army-olive); font-size: 1.2rem;">
+                            <i class="fas fa-file-pdf"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        infoPanel.innerHTML = `
+            <div class="info-box-modern" style="background: #2b5797; color: #fff; padding: 20px; border-radius: 8px; text-align: center; border: none;">
+                <i class="fas fa-file-word" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+                <span style="font-size: 0.8rem; text-transform: uppercase;">Dokument na stiahnutie</span>
+                <div style="font-size: 1.1rem; font-weight: bold; margin: 5px 0;">PRIHLÁŠKA ZA ČLENA</div>
+            </div>
+
+            <a href="docs/Prihlaska_Bellator.docx" download class="btn-main-modern" style="text-decoration: none; width: 100%; display: flex; justify-content: center; align-items: center; background: #ffffff; color: #000 !important; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 20px;">
+                <span>STIAHNUŤ TLAČIVO</span>
+                <i class="fas fa-download" style="margin-left: 10px;"></i>
+            </a>
+
+            <p style="font-size: 0.8rem; color: #bbb; margin: 20px 0; text-align: center;">
+                Originál prihlášky je potrebné priniesť osobne do sídla združenia.
+            </p>
+
+            <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold;">
+                ZAVRIEŤ
+            </button>
+        `;
     }
 
     modal.style.display = "flex";
