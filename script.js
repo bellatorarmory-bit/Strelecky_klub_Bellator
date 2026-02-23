@@ -32,43 +32,22 @@ function otvoritDetail(typKurzu) {
             <h2 id="modalTitle">Ochrana obydlia (Home Defence)</h2>
             <img src="img/HS-home.webp" class="modal-img-small" alt="Ochrana obydlia">
             
+            <div style="background: rgba(138, 154, 91, 0.1); border: 1px solid var(--army-olive); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
+                <h3 style="margin: 0; color: var(--army-olive); letter-spacing: 1px;"><i class="fas fa-calendar-plus"></i> NOVÉ TERMÍNY PRIPRAVUJEME</h3>
+                <p style="color: #ccc; font-size: 0.9rem; margin-top: 5px;">Aktuálne zostavujeme harmonogram výcvikov na nadchádzajúce obdobie.</p>
+            </div>
+
             <h4><i class="fas fa-bullseye"></i> CIEĽOM KURZU JE:</h4>
             <ul>
                 <li>zvýšiť bezpečnostné povedomie jednotlivca v prostredí vlastného obydlia,</li>
                 <li>naučiť účastníkov bezpečne a zákonne reagovať na hrozbu v obydlí,</li>
-                <li>zdokonaliť manipuláciu so zbraňou v defenzívnom a stresovom prostredí,</li>
-                <li>zlepšiť rozhodovanie, orientáciu a sebaovládanie v krízovej situácii.</li>
-            </ul>
-
-            <h4><i class="fas fa-users"></i> CIEĽOVÁ SKUPINA:</h4>
-            <ul>
-                <li>civilné osoby – držitelia zbrojného preukazu,</li>
-                <li>jednotlivci zaujímajúci sa o osobnú a rodinnú bezpečnosť,</li>
-                <li>osoby vykonávajúce sebaobranu v rámci zákona.</li>
+                <li>zdokonaliť manipuláciu so zbraňou v stresovom prostredí.</li>
             </ul>
 
             <h4><i class="fas fa-book"></i> OBSAH KURZU:</h4>
-            <div class="obsah-sekcia">
-                <i class="fas fa-gavel"></i>
-                <div><strong>1. Teoretická časť:</strong> Právny rámec, nutná obrana a krajná núdza, základné bezpečnostné princípy ochrany obydlia.</div>
-            </div>
-            <div class="obsah-sekcia">
-                <i class="fas fa-map-signs"></i>
-                <div><strong>2. Taktická príprava (defenzívna):</strong> Bezpečný pohyb v priestore, práca s krytom a uhlami, nízke svetelné podmienky.</div>
-            </div>
-            <div class="obsah-sekcia">
-                <i class="fas fa-crosshairs"></i>
-                <div><strong>3. Strelecká časť:</strong> Bezpečná manipulácia v interiéri, streľba v obmedzenom priestore a z defenzívnych pozícií.</div>
-            </div>
-            <div class="obsah-sekcia">
-                <i class="fas fa-bolt"></i>
-                <div><strong>4. Modelové situácie:</strong> Narušenie obydlia, rozhodovanie medzi únikom a obranou, ukončenie situácie.</div>
-            </div>
-
-            <h4><i class="fas fa-shield-alt"></i> DÔLEŽITÉ INFORMÁCIE</h4>
-            <div class="obsah-sekcia"><span><i class="fas fa-check" style="color:var(--army-olive)"></i> Účasť možná <strong>aj bez zbrojného preukazu</strong>.</span></div>
-            <div class="obsah-sekcia"><span><i class="fas fa-gun"></i> Prenájom zbrane: 10 €/kurz. Podmienkou je zakúpenie munície u nás.</span></div>
-            <div class="obsah-sekcia"><span><i class="fas fa-hand-holding-heart"></i> Prenájom výstroja (puzdro, ochrana sluchu a zraku) je <strong>zdarma</strong>.</span></div>
+            <div class="obsah-sekcia"><i class="fas fa-gavel"></i> <div><strong>1. Teoretická časť:</strong> Právny rámec, nutná obrana.</div></div>
+            <div class="obsah-sekcia"><i class="fas fa-map-signs"></i> <div><strong>2. Taktická príprava:</strong> Pohyb v priestore, práca s krytom.</div></div>
+            <div class="obsah-sekcia"><i class="fas fa-crosshairs"></i> <div><strong>3. Strelecká časť:</strong> Manipulácia v interiéri.</div></div>
         `;
 
         infoPanel.innerHTML = `
@@ -79,30 +58,16 @@ function otvoritDetail(typKurzu) {
             
             <h4 class="select-title">Dostupné termíny:</h4>
             <div class="terminy-container">
-                <div class="termin-card active" onclick="vybratTermin(this, '20.2.2026')">
-                    <div class="date">20. Február 2026</div>
-                    <div class="time">Piatok o 10:00</div>
-                    <div class="slots" id="slots-20-2" style="color: ${kapacity["20.2.2026"] <= 3 ? '#ff4444' : '#8a9a5b'}">
-                        Voľné miesta: ${kapacity["20.2.2026"]} / 10
-                    </div>
-                </div>
-
-                <div class="termin-card" onclick="vybratTermin(this, '12.3.2026')">
-                    <div class="date">12. Marec 2026</div>
-                    <div class="time">Štvrtok o 10:00</div>
-                    <div class="slots" id="slots-12-3" style="color: ${kapacity["12.3.2026"] <= 3 ? '#ff4444' : '#8a9a5b'}">
-                        Voľné miesta: ${kapacity["12.3.2026"]} / 10
-                    </div>
-                </div>
+                <p style="color: #bbb; font-size: 0.9rem; text-align: center; padding: 20px; border: 1px dashed #444; border-radius: 6px;">
+                    Nové termíny budú zverejnené čoskoro.
+                </p>
             </div>
 
-            <input type="hidden" id="termin-select" value="20.2.2026">
-
-            <button class="btn-main-modern" onclick="potvrditRezervaciu('domov')">
-                <span>POTVRDIŤ REZERVÁCIU</span>
-                <i class="fas fa-chevron-right"></i>
+            <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                <i class="fas fa-arrow-left" style="color: #ffffff !important;"></i> 
+                <span style="color: #ffffff !important;">Späť na ponuku</span>
             </button>
-
+            
             <div class="price-tag">120 € <span>vč. DPH</span></div>
         `;
 
@@ -208,31 +173,46 @@ function otvoritDetail(typKurzu) {
             <div class="price-tag">110 € <span>vč. DPH</span></div>
         `;
 
-    } else if (typKurzu === 'sutaz_liga') {
-        // --- KLUBOVÁ LIGA ---
+    } else if (typKurzu === 'sutaz_liga' || typKurzu === 'sutaz_tactical') {
+        // Zistíme, na ktorú kartu používateľ klikol, aby sme dali správny nadpis a obrázok
+        const jeLiga = typKurzu === 'sutaz_liga';
+        const nazov = jeLiga ? 'Klubová liga Bellator' : 'Tactical Challenge';
+        const obrazok = jeLiga ? 'img/sutaz-klubova.jpg' : 'img/sutaz-trauma.jpg';
+
         textPanel.innerHTML = `
-            <h2 id="modalTitle">Klubová liga Bellator</h2>
-            <img src="img/sutaz-klubova.jpg" class="modal-img-small" alt="Súťaž">
-            <h4><i class="fas fa-trophy"></i> O SÚŤAŽI:</h4>
-            <p>Pravidelná súťaž určená pre širokú streleckú verejnosť. Cieľom je preveriť strelecké zručnosti v dynamických parkúroch.</p>
+            <h2 id="modalTitle">${nazov}</h2>
+            <img src="${obrazok}" class="modal-img-small" alt="${nazov}" onerror="this.style.display='none'">
+            
+            <div style="background: rgba(138, 154, 91, 0.1); border: 1px solid var(--army-olive); padding: 20px; border-radius: 8px; margin-top: 20px; text-align: center;">
+                <i class="fas fa-tools" style="font-size: 2rem; color: var(--army-olive); margin-bottom: 15px;"></i>
+                <h3 style="margin: 0; color: #fff; letter-spacing: 1px;">PRIPRAVUJEME PODROBNOSTI</h3>
+                <p style="color: #ccc; margin-top: 10px;">Momentálne finalizujeme propozície a presný harmonogram pre nadchádzajúci ročník.</p>
+            </div>
+
+            <h4 style="margin-top: 30px;"><i class="fas fa-trophy"></i> O ČOM JE TÁTO SÚŤAŽ?</h4>
+            <p>Naše súťaže sú navrhnuté tak, aby preverili streleckú techniku, rozhodovanie pod tlakom a bezpečnú manipuláciu v dynamickom prostredí.</p>
             <ul>
-                <li><strong>Divízie:</strong> Standard, Open, PCC.</li>
-                <li><strong>Počet parkúrov:</strong> 4 - 5 situácií.</li>
-                <li><strong>Min. počet rán:</strong> cca 100.</li>
+                <li><strong>Kategórie:</strong> Budú upresnené v propozíciách.</li>
+                <li><strong>Náročnosť:</strong> Vhodné pre skúsených strelcov aj ambicióznych začiatočníkov.</li>
+                <li><strong>Lokalita:</strong> Strelnica Bellator Trenčín.</li>
             </ul>
         `;
 
         infoPanel.innerHTML = `
-            <div class="info-box-modern">
-                <i class="fas fa-calendar-day"></i>
-                <span><strong>Termín súťaže:</strong><br>25. Február 2026</span>
+            <div class="info-box-modern" style="border-color: #444; opacity: 0.8;">
+                <i class="fas fa-calendar-alt"></i>
+                <span><strong>Termín:</strong><br>Pripravujeme na rok 2026</span>
             </div>
-            <button class="btn-main-modern" onclick="potvrditRezervaciuSutaz('Klubová liga')">
-                <span>REGISTROVAŤ SA</span>
-                <i class="fas fa-user-plus"></i>
+            
+            <div style="padding: 15px; background: #222; border-radius: 8px; margin: 20px 0; font-size: 0.9rem; color: #aaa; text-align: center;">
+                Sledujte naše sociálne siete, kde oznámime spustenie registrácie.
+            </div>
+
+            <button onclick="zatvoritDetail()" class="btn-main-modern" style="width:100%; background: transparent; border: 1px solid var(--army-olive);">
+                <span>SPÄŤ NA STRÁNKU</span>
             </button>
-            <div class="price-tag">Štartovné: 20 €</div>
         `;
+
 
     } else {
         textPanel.innerHTML = "<h2>Pripravujeme...</h2><p>Obsah pre tento kurz momentálne finalizujeme.</p>";
@@ -334,4 +314,76 @@ window.onclick = function(event) {
 function potvrditRezervaciuSutaz(nazov) {
     alert(`Registrácia na súťaž ${nazov} bola spustená. Sledujte váš e-mail.`);
     zatvoritDetail();
+}
+function otvoritModalVseobecny(typ) {
+    const modal = document.getElementById('courseModal');
+    const textPanel = document.querySelector('.modal-text');
+    const infoPanel = document.querySelector('.modal-info-panel');
+
+    if (typ === 'stanovy') {
+        textPanel.innerHTML = `
+            <div class="stanovy-header" style="border-bottom: 2px solid var(--army-olive); margin-bottom: 20px; padding-bottom: 10px;">
+                <h2 style="margin:0;">STANOVY</h2>
+                <p style="color: var(--army-olive); font-weight: bold; margin: 5px 0 0 0;">Strelecký klub Bellator o.z.</p>
+            </div>
+            
+            <div class="stanovy-content" style="text-align: justify; font-size: 0.9rem; line-height: 1.6; color: #eee; max-height: 60vh; overflow-y: auto; padding-right: 15px;">
+                <p style="font-style: italic; font-size: 0.8rem; color: #aaa;">Založené v súlade so zákonom č. 83/1990 Zb. o združovaní občanov.</p>
+
+                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px;">Článok 1: Názov, sídlo a postavenie</h3>
+                <p><strong>1.1.</strong> Názov občianskeho združenia je: <strong>Strelecký klub Bellator o.z.</strong></p>
+                <p><strong>1.2.</strong> Sídlo združenia: <strong>Hurbanova 1592/40, 911 01 Trenčín</strong>.</p>
+                <p><strong>1.3.</strong> Združenie je nezávislá, samostatná právnická osoba.</p>
+                <p><strong>1.6.</strong> Združuje občanov starších ako 18 rokov bez rozdielu národnosti, rasy, náboženstva či politickej príslušnosti.</p>
+
+                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 2: Ciele združenia</h3>
+                <p>Hlavným cieľom je presadzovať záujmy streleckého športu, podporovať všestranný rozvoj športovej streľby a spoluprácu so streleckými organizáciami.</p>
+                <p><strong>Úlohy združenia zahŕňajú najmä:</strong></p>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Odborné poradenstvo v oblasti strelectva.</li>
+                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Výcvik zaobchádzania so športovou zbraňou.</li>
+                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Realizácia špeciálnych kurzov a seminárov.</li>
+                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Práca s mládežou a propagácia streleckého športu.</li>
+                </ul>
+
+                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 3: Členstvo</h3>
+                <p><strong>3.5.</strong> Členstvo vzniká prijatím člena Výkonnou radou na základe písomnej žiadosti a zaplatení členského poplatku.</p>
+                <p><strong>3.6. Práva člena:</strong> Zúčastňovať sa zasadnutí, podieľať sa na aktivitách a byť informovaný o rozhodnutiach.</p>
+                <p><strong>3.7. Povinnosti člena:</strong> Dodržiavať stanovy, budovať dobré meno klubu a ochraňovať majetok združenia.</p>
+
+                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 4: Orgány združenia</h3>
+                <p>Orgánmi združenia sú: <strong>Členská rada</strong> (najvyšší orgán), <strong>Výkonná rada</strong>, <strong>Štatutárny orgán</strong> (Predseda, Podpredseda) a <strong>Kontrolór</strong>.</p>
+                
+                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 5: Hospodárenie</h3>
+                <p>Združenie hospodári s majetkom získaným z darov, grantov, členských príspevkov a podielu dane. Majetok slúži výhradne na napĺňanie cieľov združenia.</p>
+                
+                <div style="margin-top: 30px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 5px; font-size: 0.8rem;">
+                    <p>Schválené dňa: <strong>07.12.2025</strong><br>Miesto: Trenčín</p>
+                </div>
+            </div>
+        `;
+
+       infoPanel.innerHTML = `
+    <div class="info-box-modern" style="border-color: var(--army-olive); background: rgba(138, 154, 91, 0.1); padding: 15px; border-radius: 8px;">
+        <i class="fas fa-file-alt" style="color: #ffffff; font-size: 1.5rem; margin-bottom: 5px;"></i><br>
+        <span style="color: #ffffff;"><strong>Formát dokumentu:</strong><br>Informačný výpis</span>
+    </div>
+    
+    <p style="font-size: 0.9rem; color: #ffffff; margin: 20px 0; line-height: 1.4; text-align: center;">
+        Tento text slúži na oboznámenie sa s pravidlami klubu.
+    </p>
+    
+    <a href="docs/stanovy_bellator_info.pdf" target="_blank" class="btn-main-modern" style="text-decoration: none; width: 100%; display: flex; justify-content: center; align-items: center; background: var(--army-olive); color: #ffffff !important; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+        <span>OTVORIŤ TEXT STANOV</span>
+        <i class="fas fa-file-pdf" style="margin-left: 10px; color: #ffffff;"></i>
+    </a>
+
+    <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; text-transform: uppercase;">
+        ZATVORIŤ
+    </button>
+`;
+    }
+
+    modal.style.display = "flex";
+    document.body.style.overflow = "hidden";
 }
