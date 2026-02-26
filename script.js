@@ -311,10 +311,6 @@ window.onclick = function(event) {
     if (event.target == modal) zatvoritDetail();
 }
 
-function potvrditRezervaciuSutaz(nazov) {
-    alert(`Registrácia na súťaž ${nazov} bola spustená. Sledujte váš e-mail.`);
-    zatvoritDetail();
-}
 function otvoritModalVseobecny(typ) {
     const modal = document.getElementById('courseModal');
     const textPanel = document.querySelector('.modal-text');
@@ -324,7 +320,7 @@ function otvoritModalVseobecny(typ) {
         // --- SEKCIA STANOVY ---
         textPanel.innerHTML = `
             <div class="stanovy-header" style="border-bottom: 2px solid var(--army-olive); margin-bottom: 20px; padding-bottom: 10px;">
-                <h2 style="margin:0;">STANOVY</h2>
+                <h2 style="margin:0; color: #ffffff;">STANOVY</h2>
                 <p style="color: var(--army-olive); font-weight: bold; margin: 5px 0 0 0;">Strelecký klub Bellator o.z.</p>
             </div>
             
@@ -335,28 +331,16 @@ function otvoritModalVseobecny(typ) {
                 <p><strong>1.1.</strong> Názov občianskeho združenia je: <strong>Strelecký klub Bellator o.z.</strong></p>
                 <p><strong>1.2.</strong> Sídlo združenia: <strong>Hurbanova 1592/40, 911 01 Trenčín</strong>.</p>
                 <p><strong>1.3.</strong> Združenie je nezávislá, samostatná právnická osoba.</p>
-                <p><strong>1.6.</strong> Združuje občanov starších ako 18 rokov bez rozdielu národnosti, rasy, náboženstva či politickej príslušnosti.</p>
 
                 <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 2: Ciele združenia</h3>
                 <p>Hlavným cieľom je presadzovať záujmy streleckého športu, podporovať všestranný rozvoj športovej streľby a spoluprácu so streleckými organizáciami.</p>
-                <p><strong>Úlohy združenia zahŕňajú najmä:</strong></p>
                 <ul style="list-style-type: none; padding-left: 0;">
-                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Odborné poradenstvo v oblasti strelectva.</li>
-                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Výcvik zaobchádzania so športovou zbraňou.</li>
-                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Realizácia špeciálnych kurzov a seminárov.</li>
-                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Práca s mládežou a propagácia streleckého športu.</li>
+                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Odborné poradenstvo a výcvik so zbraňou.</li>
+                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Realizácia kurzov a práca s mládežou.</li>
                 </ul>
 
                 <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 3: Členstvo</h3>
-                <p><strong>3.5.</strong> Členstvo vzniká prijatím člena Výkonnou radou na základe písomnej žiadosti a zaplatení členského poplatku.</p>
-                <p><strong>3.6. Práva člena:</strong> Zúčastňovať sa zasadnutí, podieľať sa na aktivitách a byť informovaný o rozhodnutiach.</p>
-                <p><strong>3.7. Povinnosti člena:</strong> Dodržiavať stanovy, budovať dobré meno klubu a ochraňovať majetok združenia.</p>
-
-                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 4: Orgány združenia</h3>
-                <p>Orgánmi združenia sú: <strong>Členská rada</strong> (najvyšší orgán), <strong>Výkonná rada</strong>, <strong>Štatutárny orgán</strong> (Predseda, Podpredseda) a <strong>Kontrolór</strong>.</p>
-                
-                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 5: Hospodárenie</h3>
-                <p>Združenie hospodári s majetkom získaným z darov, grantov, členských príspevkov a podielu dane. Majetok slúži výhradne na napĺňanie cieľov združenia.</p>
+                <p><strong>3.5.</strong> Členstvo vzniká prijatím Výkonnou radou na základe písomnej žiadosti a zaplatení členského poplatku.</p>
                 
                 <div style="margin-top: 30px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 5px; font-size: 0.8rem;">
                     <p>Schválené dňa: <strong>07.12.2025</strong><br>Miesto: Trenčín</p>
@@ -365,9 +349,9 @@ function otvoritModalVseobecny(typ) {
         `;
 
         infoPanel.innerHTML = `
-            <div class="info-box-modern" style="border-color: var(--army-olive); background: rgba(138, 154, 91, 0.1); padding: 15px; border-radius: 8px;">
+            <div class="info-box-modern" style="border-color: var(--army-olive); background: rgba(138, 154, 91, 0.1); padding: 15px; border-radius: 8px; text-align: center;">
                 <i class="fas fa-file-alt" style="color: #ffffff; font-size: 1.5rem; margin-bottom: 5px;"></i><br>
-                <span style="color: #ffffff;"><strong>Formát dokumentu:</strong><br>Informačný výpis</span>
+                <span style="color: #ffffff;"><strong>Formát:</strong><br>PDF Dokument</span>
             </div>
             
             <p style="font-size: 0.9rem; color: #ffffff; margin: 20px 0; line-height: 1.4; text-align: center;">
@@ -375,17 +359,17 @@ function otvoritModalVseobecny(typ) {
             </p>
             
             <a href="docs/stanovy_bellator_info.pdf" target="_blank" class="btn-main-modern" style="text-decoration: none; width: 100%; display: flex; justify-content: center; align-items: center; background: var(--army-olive); color: #ffffff !important; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">
-                <span>OTVORIŤ TEXT STANOV</span>
-                <i class="fas fa-file-pdf" style="margin-left: 10px; color: #ffffff;"></i>
+                <span>OTVORIŤ STANOVY</span>
+                <i class="fas fa-file-pdf" style="margin-left: 10px;"></i>
             </a>    
 
-            <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold; text-transform: uppercase;">
+            <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold;">
                 ZATVORIŤ
             </button>
         `;
 
     } else if (typ === 'clenstvo') {
-        // --- SEKCIA ČLENSTVO ---
+        // --- UPRAVENÁ SEKCIA ČLENSTVO S BENEFITMI ---
         textPanel.innerHTML = `
             <div class="stanovy-header" style="border-bottom: 2px solid var(--army-olive); margin-bottom: 20px; padding-bottom: 10px;">
                 <h2 style="margin:0; color: #ffffff;">ČLENSTVO V KLUBE</h2>
@@ -393,21 +377,41 @@ function otvoritModalVseobecny(typ) {
             </div>
             
             <div class="membership-content" style="color: #ffffff; line-height: 1.6; font-size: 0.95rem;">
-                <h4 style="color: var(--army-olive);"><i class="fas fa-clipboard-list"></i> AKO SA STAŤ ČLENOM:</h4>
-                <p>Proces prijatia za člena prebieha v súlade so stanovami združenia v nasledujúcich krokoch:</p>
                 
+                <div style="background: rgba(138, 154, 91, 0.15); border: 1px solid var(--army-olive); padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+                    <h4 style="color: var(--army-olive); margin-top: 0; display: flex; align-items: center;">
+                        <i class="fas fa-id-card" style="margin-right: 10px;"></i> ČLENSKÝ PRÍSPEVOK A VÝHODY
+                    </h4>
+                    <p style="font-size: 1.1rem; font-weight: bold; margin-bottom: 10px;">Ročný poplatok (365 dní): <span style="color: var(--army-olive);">120 €</span></p>
+                    <ul style="list-style: none; padding-left: 0; margin-bottom: 0;">
+                        <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
+                            <i class="fas fa-star" style="color: var(--army-olive); margin-right: 10px; margin-top: 5px;"></i>
+                            <span><strong>Karta člena:</strong> Každý člen obdrží členskú kartu.</span>
+                        </li>
+                        <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
+                            <i class="fas fa-check" style="color: var(--army-olive); margin-right: 10px; margin-top: 5px;"></i>
+                            <span><strong>20x voľný vstup:</strong> Nárok na 20 vstupov (30 min.) na dráhu na strelnici <strong>Bellator Armory v Trenčíne</strong>.</span>
+                        </li>
+                        <li style="margin-bottom: 0; display: flex; align-items: flex-start;">
+                            <i class="fas fa-percent" style="color: var(--army-olive); margin-right: 10px; margin-top: 5px;"></i>
+                            <span><strong>Zľava 20%:</strong> Po vyčerpaní kreditov plynule pokračuje zľava na prenájom streleckej dráhy.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <h4 style="color: var(--army-olive);"><i class="fas fa-clipboard-list"></i> AKO SA STAŤ ČLENOM:</h4>
                 <ul style="list-style: none; padding-left: 0; margin-bottom: 25px;">
-                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
-                        <i class="fas fa-1" style="background: var(--army-olive); color: #000; padding: 5px 10px; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.8rem;"></i>
-                        <div><strong>Stiahnutie prihlášky:</strong> Stiahnite si tlačivo v pravom paneli a vyplňte požadované údaje.</div>
+                    <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
+                        <i class="fas fa-1" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
+                        <div><strong>Stiahnutie prihlášky:</strong> Vyplňte tlačivo dostupné v pravom paneli.</div>
                     </li>
-                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
-                        <i class="fas fa-2" style="background: var(--army-olive); color: #000; padding: 5px 10px; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.8rem;"></i>
-                        <div><strong>Osobné doručenie:</strong> Vyplnenú a podpísanú prihlášku je potrebné doručiť <strong>osobne</strong> do sídla klubu alebo na strelnicu.</div>
+                    <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
+                        <i class="fas fa-2" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
+                        <div><strong>Osobné doručenie:</strong> Prihlášku prineste osobne na strelnicu Bellator Armory v Trenčíne.</div>
                     </li>
-                    <li style="margin-bottom: 15px; display: flex; align-items: flex-start;">
-                        <i class="fas fa-3" style="background: var(--army-olive); color: #000; padding: 5px 10px; border-radius: 50%; margin-right: 15px; font-weight: bold; font-size: 0.8rem;"></i>
-                        <div><strong>Schválenie a poplatok:</strong> Po doručení žiadosť prerokuje Výkonná rada. Po schválení a uhradení poplatku sa stávate členom.</div>
+                    <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
+                        <i class="fas fa-3" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
+                        <div><strong>Schválenie a karta:</strong> Po posúdení Výkonnou radou a zaplatení príspevku vám bude vystavená <strong>karta člena a potvrdenie</strong>.</div>
                     </li>
                 </ul>
 
@@ -440,16 +444,13 @@ function otvoritModalVseobecny(typ) {
                 <i class="fas fa-download" style="margin-left: 10px;"></i>
             </a>
 
-            <p style="font-size: 0.8rem; color: #bbb; margin: 20px 0; text-align: center;">
-                Originál prihlášky je potrebné priniesť osobne do sídla združenia.
-            </p>
-
-            <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold;">
+            <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold;">
                 ZAVRIEŤ
             </button>
         `;
     }
 
+    // --- TOTO JE DÔLEŽITÉ PRE ZOBRAZENIE MODALU ---
     modal.style.display = "flex";
     document.body.style.overflow = "hidden";
 }
