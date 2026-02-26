@@ -390,7 +390,7 @@ function otvoritModalVseobecny(typ) {
                         </li>
                         <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
                             <i class="fas fa-check" style="color: var(--army-olive); margin-right: 10px; margin-top: 5px;"></i>
-                            <span><strong>20x voľný vstup:</strong> Nárok na 20 vstupov (30 min.) na dráhu na strelnici <strong>Bellator Armory v Trenčíne</strong>.</span>
+                            <span><strong>25x voľný vstup:</strong> Nárok na 25 vstupov (30 min.) na dráhu na strelnici <strong>Bellator Armory v Trenčíne</strong>.</span>
                         </li>
                         <li style="margin-bottom: 0; display: flex; align-items: flex-start;">
                             <i class="fas fa-percent" style="color: var(--army-olive); margin-right: 10px; margin-top: 5px;"></i>
