@@ -699,3 +699,33 @@ body {
         height: 250px;
     }
 }
+.hero-actions {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-hero-primary {
+    background-color: var(--army-olive); /* Použije tvoju definovanú olivovú */
+    color: #000 !important; /* Čierny text pre dobrý kontrast */
+    padding: 15px 35px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 5px;
+    letter-spacing: 1.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid var(--army-olive);
+}
+
+.btn-hero-primary:hover {
+    background-color: transparent;
+    color: var(--army-olive) !important;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(138, 154, 91, 0.4);
+}
