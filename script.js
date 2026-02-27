@@ -26,8 +26,8 @@ function otvoritDetail(typKurzu) {
     const textPanel = document.querySelector('.modal-text');
     const infoPanel = document.querySelector('.modal-info-panel');
 
-    if (typKurzu === 'domov') {
-        // --- OCHRANA OBYDLIA ---
+if (typKurzu === 'domov') {
+        // --- OCHRANA OBYDLIA (HOME DEFENCE) ---
         textPanel.innerHTML = `
             <h2 id="modalTitle">Ochrana obydlia (Home Defence)</h2>
             <img src="img/HS-home.webp" class="modal-img-small" alt="Ochrana obydlia">
@@ -38,16 +38,34 @@ function otvoritDetail(typKurzu) {
             </div>
 
             <h4><i class="fas fa-bullseye"></i> CIEĽOM KURZU JE:</h4>
-            <ul>
+            <ul style="margin-bottom: 20px;">
                 <li>zvýšiť bezpečnostné povedomie jednotlivca v prostredí vlastného obydlia,</li>
                 <li>naučiť účastníkov bezpečne a zákonne reagovať na hrozbu v obydlí,</li>
-                <li>zdokonaliť manipuláciu so zbraňou v stresovom prostredí.</li>
+                <li>zdokonaliť manipuláciu so zbraňou v <strong>defenzívnom a stresovom prostredí</strong>,</li>
+                <li>zlepšiť rozhodovanie, orientáciu a sebaovládanie v krízovej situácii.</li>
+            </ul>
+
+            <h4><i class="fas fa-users"></i> CIEĽOVÁ SKUPINA:</h4>
+            <ul style="margin-bottom: 20px;">
+                <li>civilné osoby – držitelia zbrojného preukazu,</li>
+                <li>jednotlivci zaujímajúci sa o osobnú a rodinnú bezpečnosť,</li>
+                <li>osoby vykonávajúce sebaobranu v rámci zákona.</li>
             </ul>
 
             <h4><i class="fas fa-book"></i> OBSAH KURZU:</h4>
-            <div class="obsah-sekcia"><i class="fas fa-gavel"></i> <div><strong>1. Teoretická časť:</strong> Právny rámec, nutná obrana.</div></div>
-            <div class="obsah-sekcia"><i class="fas fa-map-signs"></i> <div><strong>2. Taktická príprava:</strong> Pohyb v priestore, práca s krytom.</div></div>
-            <div class="obsah-sekcia"><i class="fas fa-crosshairs"></i> <div><strong>3. Strelecká časť:</strong> Manipulácia v interiéri.</div></div>
+            <div class="obsah-sekcia"><i class="fas fa-gavel"></i> 
+                <div><strong>1. Teoretická časť:</strong> Právny rámec použitia zbrane (nutná obrana, krajná núdza), prevencia a vyhodnocovanie rizík.</div>
+            </div>
+            <div class="obsah-sekcia">
+    <i class="fas fa-shield-alt"></i> 
+    <div><strong>2. Taktická príprava (defenzívna):</strong> Bezpečný pohyb v obydlí, práca s krytom a uhlami, ochrana blízkych.</div>
+</div>
+            <div class="obsah-sekcia"><i class="fas fa-crosshairs"></i> 
+                <div><strong>3. Strelecká časť:</strong> Manipulácia v interiéri, streľba v obmedzenom priestore a z defenzívnych pozícií.</div>
+            </div>
+            <div class="obsah-sekcia"><i class="fas fa-user-shield"></i> 
+                <div><strong>4. Modelové situácie:</strong> Narušenie obydlia, reakcia jednotlivca, rozhodovanie (únik vs. obrana) a ukončenie situácie.</div>
+            </div>
         `;
 
         infoPanel.innerHTML = `
@@ -237,7 +255,7 @@ function potvrditRezervaciu(povodniTyp) {
 
     textPanel.innerHTML = `
         <h3><i class="fas fa-shield-halved"></i> Podmienky rezervácie</h3>
-        <p>Pre záväznú rezerváciu miesta na kure je potrebné <strong>uhradiť poplatok</strong>. Vaše miesto bude garantované okamžite po úspešnej realizácii platby.</p>
+        <p>Pre záväznú rezerváciu miesta na kurze je potrebné <strong>uhradiť poplatok</strong>. Vaše miesto bude garantované okamžite po úspešnej realizácii platby.</p>
         
         <div style="background: rgba(138, 154, 91, 0.1); border-left: 4px solid var(--army-olive); padding: 15px; border-radius: 4px; margin: 20px 0;">
             <h4 style="margin-top:0; color:var(--army-olive);"><i class="fas fa-user-clock"></i> Čo v prípade neúčasti?</h4>
