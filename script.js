@@ -400,18 +400,21 @@ function otvoritModalVseobecny(typ) {
                 </div>
 
                 <h4 style="color: var(--army-olive);"><i class="fas fa-clipboard-list"></i> AKO SA STAŤ ČLENOM:</h4>
-                <ul style="list-style: none; padding-left: 0; margin-bottom: 25px;">
-                    <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                        <i class="fas fa-1" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
-                        <div><strong>Stiahnutie prihlášky:</strong> Vyplňte tlačivo dostupné v pravom paneli.</div>
-                    </li>
+<ul style="list-style: none; padding-left: 0; margin-bottom: 25px;">
+    <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
+        <i class="fas fa-1" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
+        <div>
+            <strong>Získanie prihlášky:</strong> Tlačivo si môžete stiahnuť v pravom paneli, alebo si ho 
+            <strong>vyžiadať osobne</strong> priamo na recepcii strelnice <strong>Bellator Armory</strong>.
+        </div>
+    </li>
                     <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
                         <i class="fas fa-2" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
                         <div><strong>Osobné doručenie:</strong> Prihlášku prineste osobne na strelnicu Bellator Armory v Trenčíne.</div>
                     </li>
                     <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
                         <i class="fas fa-3" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
-                        <div><strong>Schválenie a karta:</strong> Po posúdení Výkonnou radou a zaplatení príspevku vám bude vystavená <strong>karta člena a potvrdenie</strong>.</div>
+                        <div><strong>Schválenie a karta:</strong> Po posúdení výkonnou radou a zaplatení príspevku vám bude vystavená <strong>karta člena a potvrdenie</strong>.</div>
                     </li>
                 </ul>
 
