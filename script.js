@@ -742,3 +742,13 @@ async function zistiVolneMesta(datum) {
         return 10;
     }
 }
+// Spustí sa automaticky pri načítaní stránky
+window.addEventListener('load', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const kurzZLinku = urlParams.get('kurz');
+
+    if (kurzZLinku) {
+        // Ak v linku našiel napr. ?kurz=zakladny, automaticky ho otvorí
+        otvoritDetail(kurzZLinku);
+    }
+});
