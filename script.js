@@ -1,31 +1,115 @@
-/**
- * STRELECKÝ KLUB BELLATOR - Rezervačný systém (KOMPLETNÁ VERZIA)
- */
-
-let kapacity = {
-    "20.2.2026": 6,
-    "12.3.2026": 10
+const kapacity = {
+    "11.04.2026": 10,
+    "12.04.2026": 10,
+    "13.04.2026": 10
 };
+// 1. Inicializácia (Doplň svoje údaje zo Settings -> API)
+const SUPABASE_URL = 'https://ihcliqqmqkccymuabakw.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_COnhxm99zSxyQ5sT9qc58w_FxzAZb2D';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+async function aktualizujVolneMesta(datum) {
+    try {
+        // Spýtame sa Supabase na počet riadkov pre tento dátum
+        const { count, error } = await _supabase
+            .from('rezervacie')
+            .select('*', { count: 'exact', head: true })
+            .eq('datum_kurzu', datum);
 
-// --- 1. FUNKCIA PRE MOBILNÉ MENU (HAMBURGER) ---
-function toggleMenu() {
-    const navLinks = document.getElementById('navLinks');
-    navLinks.classList.toggle('active');
+        if (error) throw error;
+
+        // Výpočet: Maximálna kapacita (10) mínus počet prihlásených
+        const maximalnaKapacita = 10;
+        const aktualnePrihlasenych = count || 0;
+        
+        return maximalnaKapacita - aktualnePrihlasenych;
+
+    } catch (err) {
+        console.error("Chyba pri načítaní kapacity:", err);
+        return 10; // Ak zlyhá spojenie, vrátime pôvodnú hodnotu
+    }
 }
+// 2. Funkcia na uloženie do DB
+async function odoslatFinalnuRezervaciu(datum, typ) {
+    console.log("Pokus o odoslanie rezervácie..."); // Toto uvidíš v konzole (F12)
 
-// Zatvorenie menu po kliknutí na odkaz
-document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', () => {
-        document.getElementById('navLinks').classList.remove('active');
-    });
-});
+    try {
+        // Získanie hodnôt
+        const meno = document.getElementById('reg-meno').value;
+        const priezvisko = document.getElementById('reg-priezvisko').value;
+        const email = document.getElementById('reg-email').value;
+        const telefon = document.getElementById('reg-tel').value;
+        const clen = document.getElementById('reg-clen').value;
+        const suhlas = document.getElementById('souhlas').checked;
 
+        if (!meno || !priezvisko || !email || !suhlas) {
+            alert("Prosím vyplňte povinné údaje a zaškrtnite súhlas.");
+            return;
+        }
+
+        console.log("Dáta pripravené, posielam do Supabase...");
+
+        // Uloženie do Supabase
+        const { data, error } = await _supabase
+            .from('rezervacie')
+            .insert([
+                { 
+                    meno: meno, 
+                    priezvisko: priezvisko, 
+                    email: email, 
+                    telefon: telefon,
+                    clen_klubu: clen,
+                    datum_kurzu: datum,
+                    typ_kurzu: typ
+                }
+            ]);
+
+        if (error) throw error; // Ak je chyba v DB, skočí to do sekcie catch
+
+        // Zobrazenie poďakovania
+        // Toto vlož namiesto toho alertu:
+const wrapper = document.getElementById('side-content-wrapper');
+wrapper.innerHTML = `
+    <div style="text-align: center; padding: 40px 20px; animation: fadeIn 0.5s;">
+        <i class="fas fa-check-circle" style="font-size: 5rem; color: #8a9a5b; margin-bottom: 25px;"></i>
+        <h2 style="color: #fff; margin-bottom: 15px; font-family: 'Rajdhani', sans-serif; text-transform: uppercase;">Rezervácia prijatá</h2>
+        
+        <p style="color: #ccc; line-height: 1.6; margin-bottom: 20px;">
+            Ďakujeme, <strong>${meno}</strong>. Vaše miesto na kurz sme úspešne zaregistrovali.
+        </p>
+
+        <div style="background: rgba(138, 154, 91, 0.1); border: 1px solid #8a9a5b; padding: 15px; border-radius: 8px; margin-bottom: 30px; text-align: left;">
+            <p style="color: #ddd; font-size: 0.9rem; margin: 0;">
+                <i class="fas fa-info-circle" style="color: #8a9a5b; margin-right: 8px;"></i>
+                Podrobné informácie k výstroji a <strong>podklady k platbe</strong> sme vám práve odoslali na mail <strong>${email}</strong>.
+            </p>
+        </div>
+
+        <button onclick="zatvoritDetail()" style="width: 100%; padding: 15px; background: #8a9a5b; color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;">
+            ROZUMIEM
+        </button>
+    </div>
+`;
+
+    } catch (err) {
+        console.error("CHYBA:", err);
+        alert("Nastal problém: " + err.message);
+    }
+}
 // --- 2. HLAVNÁ FUNKCIA OTVORENIA DETAILU ---
-function otvoritDetail(typKurzu) {
+async function otvoritDetail(typKurzu) {
     const modal = document.getElementById('courseModal');
     const textPanel = document.querySelector('.modal-text');
     const infoPanel = document.querySelector('.modal-info-panel');
+    
 
+    // 1. VYČISTENIE PANELOV
+    textPanel.innerHTML = "";
+    infoPanel.innerHTML = "";
+
+    // 2. AKTUALIZÁCIA URL (Pre účely propagácie)
+    // Ak niekto klikne na kurz, v adresnom riadku sa zjaví napr. #kurz-zakladny
+    window.history.pushState({kurz: typKurzu}, "", "#kurz-" + typKurzu);
+    
 if (typKurzu === 'domov') {
         // --- OCHRANA OBYDLIA (HOME DEFENCE) ---
         textPanel.innerHTML = `
@@ -169,27 +253,82 @@ if (typKurzu === 'domov') {
                 <li>Praktické postupy použiteľné v reálnom živote.</li>
             </ul>
         `;
+     } else if (typKurzu === 'zakladny') {
+    // 1. Definovanie dátumu pre tento konkrétny kurz
+    const datumKurzu = "11.04.2026";
 
-        infoPanel.innerHTML = `
-            <div class="info-box-modern">
-                <i class="fas fa-location-dot"></i>
-                <span><strong>Miesto výcviku:</strong><br>Strelnica Bellator Trenčín</span>
-            </div>
-            
-            <h4 class="select-title">Dostupné termíny:</h4>
-            <div class="terminy-container">
-                <p style="color: #bbb; font-size: 0.9rem; text-align: center; padding: 20px; border: 1px dashed #444; border-radius: 6px;">
-                    Aktuálne pripravujeme nové termíny pre tento kurz.
-                </p>
-            </div>
-
-            <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                <i class="fas fa-arrow-left" style="color: #ffffff !important;"></i> 
-                <span style="color: #ffffff !important;">Späť na ponuku</span>
-            </button>
-            
-            <div class="price-tag">110 € <span>vč. DPH</span></div>
+    // 2. ZÍSKANIE AKTUÁLNEHO POČTU MIEST Z DATABÁZY
+    // (Použijeme pomocnú funkciu, ktorú pridáme nižšie)
+    const volneMesta = await zistiVolneMesta(datumKurzu);
+    const jePlno = volneMesta <= 0;
+        // --- ĽAVÝ PANEL (tvoj pôvodný kód) ---
+        textPanel.innerHTML = `
+            <h2 id="modalTitle">Bezpečná manipulácia a základy streľby (Úroveň 1)</h2>
+            <p style="font-style: italic; color: var(--army-olive); margin-bottom: 20px;">
+                „Pochopenie zbrane začína rešpektom a správnymi návykmi.“
+            </p>
+            <img src="img/HS-zaklad.webp" class="modal-img-small" alt="Základný kurz">
+            <p>Tento kurz je určený pre úplných začiatočníkov a budúcich držiteľov ZP. Naším cieľom nie je len naučiť vás strieľať, ale vybudovať absolútnu istotu v manipulácii.</p>
+            <h4><i class="fas fa-bullseye"></i> ČO VÁS NAUČÍME:</h4>
+            <ul>
+                <li><strong>Štyri základné pravidlá bezpečnosti:</strong> Alfa a omega každého strelca.</li>
+                <li><strong>Konštrukcia a funkcia:</strong> Ako pištoľ skutočne funguje.</li>
+                <li><strong>Správny úchop a postoj:</strong> Základ pre presnú streľbu.</li>
+                <li><strong>Mierenie a práca so spúšťou:</strong> Ako trafiť presne tam, kam sa pozeráte.</li>
+                <li><strong>Drily bez nábojov (Sušenie):</strong> Správne návyky pri nabíjaní a kontrole.</li>
+                <li><strong>Streľba na terč:</strong> Prenesenie teórie do praxe pod dohľadom inštruktora.</li>
+            </ul>
+            <h4><i class="fas fa-info-circle"></i> TECHNICKÉ DETAILY:</h4>
+            <div class="obsah-sekcia"><i class="fas fa-clock"></i> <div><strong>Trvanie:</strong> 4 hodiny</div></div>
+            <div class="obsah-sekcia"><i class="fas fa-briefcase"></i> <div><strong>Vybavenie:</strong> Nemáte vlastnú výstroj? Vhodnú zbraň aj pomôcky si môžete vybrať na mieste.</div></div>
+            <div class="obsah-sekcia"><i class="fas fa-gun"></i> <div><strong>Strelivo:</strong> Vlastné, alebo možnosť zakúpenia priamo na strelnici.</div></div>
         `;
+
+        // --- PRAVÝ PANEL (Upravený pre registráciu a kapacity) ---
+        infoPanel.innerHTML = `
+            <div id="side-content-wrapper">
+                <div class="info-box-modern">
+                    <i class="fas fa-location-dot"></i>
+                    <span><strong>Miesto výcviku:</strong><br>Strelnica Bellator Trenčín</span>
+                </div>
+                
+                <h4 class="select-title">Dostupné termíny:</h4>
+                <div class="terminy-container">
+                    <div class="termin-item">
+                        <div class="termin-info">
+                            <i class="far fa-calendar-check"></i>
+                            <span style="display:block;">11. 04. 2026 (Sobota) o 12:00</span>
+                            <span style="font-size: 0.8rem; display:block; margin-top: 5px; color: ${volneMesta < 3 ? '#ff4d4d' : '#88b04b'};">
+                                Voľné miesta: <strong>${volneMesta} / 10</strong>
+                            </span>
+                        </div>
+                        <button class="btn-rezervovat" 
+                                ${jePlno ? 'disabled style="background:#444; color:#888; border-color:#444; cursor:not-allowed;"' : ''}
+                                onclick="zobrazitRegistraciu('${datumKurzu}', 'zakladny')">
+                            ${jePlno ? 'OBSADENÉ' : 'Vybrať <i class="fas fa-chevron-right"></i>'}
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fas fa-arrow-left"></i> 
+                    <span>Späť na ponuku</span>
+                </button>
+                
+                <div style="margin-top: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid #333;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Člen klubu</span>
+        <span style="color: #8a9a5b; font-weight: bold; font-size: 1.4rem;">70 €</span>
+    </div>
+    <div style="height: 1px; background: #333; margin: 10px 0;"></div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Bežná cena</span>
+        <span style="color: #fff; font-weight: bold; font-size: 1.4rem;">86 €</span>
+    </div>
+    <p style="text-align: center; font-size: 0.7rem; color: #666; margin: 10px 0 0 0;">Ceny sú uvedené vrátane DPH</p>
+</div>
+        `;
+ 
 
     } else if (typKurzu === 'sutaz_liga' || typKurzu === 'sutaz_tactical') {
         // Zistíme, na ktorú kartu používateľ klikol, aby sme dali správny nadpis a obrázok
@@ -242,97 +381,183 @@ if (typKurzu === 'domov') {
 }
 
 // --- 3. POMOCNÉ FUNKCIE PRE KURZY ---
-function vybratTermin(element, datum) {
-    document.querySelectorAll('.termin-card').forEach(card => card.classList.remove('active'));
-    element.classList.add('active');
-    document.getElementById('termin-select').value = datum;
-}
-
-function potvrditRezervaciu(povodniTyp) {
-    const termin = document.getElementById('termin-select').value;
-    const textPanel = document.querySelector('.modal-text');
-    const infoPanel = document.querySelector('.modal-info-panel');
-
-    textPanel.innerHTML = `
-        <h3><i class="fas fa-shield-halved"></i> Podmienky rezervácie</h3>
-        <p>Pre záväznú rezerváciu miesta na kurze je potrebné <strong>uhradiť poplatok</strong>. Vaše miesto bude garantované okamžite po úspešnej realizácii platby.</p>
-        
-        <div style="background: rgba(138, 154, 91, 0.1); border-left: 4px solid var(--army-olive); padding: 15px; border-radius: 4px; margin: 20px 0;">
-            <h4 style="margin-top:0; color:var(--army-olive);"><i class="fas fa-user-clock"></i> Čo v prípade neúčasti?</h4>
-            <p style="margin-bottom:0;">Ak sa na kurz nebudete môcť dostaviť, poplatok sa nevracia, ale <strong>v plnej výške sa prenáša ako kredit</strong> na váš ďalší termín alebo iný kurz z našej ponuky.</p>
-        </div>
-
-        <p style="font-size: 0.9em; color: var(--text-secondary); margin-top: 20px;">
-            Po dokončení platby vám systém automaticky zašle potvrdenie o rezervácii a podrobné organizačné pokyny ku kurzu na váš e-mail.
-        </p>
-    `;
-
-    infoPanel.innerHTML = `
-        <h4 style="margin-bottom:20px;">Registračné údaje</h4>
+function zobrazitRegistraciu(datum, typ) {
+    const wrapper = document.getElementById('side-content-wrapper');
+    
+    wrapper.innerHTML = `
+        <h4 style="margin-bottom:20px; color: var(--army-olive);">Registrácia na ${datum}</h4>
         
         <div style="display: flex; gap: 10px; margin-bottom: 15px;">
             <div style="flex: 1;">
-                <label style="display:block; margin-bottom:5px;">Meno *</label>
-                <input type="text" id="reg-meno" placeholder="Jozef" style="width:100%;">
+                <label style="display:block; margin-bottom:5px; font-size: 0.9rem;">Meno *</label>
+                <input type="text" id="reg-meno" style="width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
             </div>
             <div style="flex: 1;">
-                <label style="display:block; margin-bottom:5px;">Priezvisko *</label>
-                <input type="text" id="reg-priezvisko" placeholder="Mrkva" style="width:100%;">
+                <label style="display:block; margin-bottom:5px; font-size: 0.9rem;">Priezvisko *</label>
+                <input type="text" id="reg-priezvisko" style="width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
             </div>
         </div>
 
-        <label style="display:block; margin-bottom:5px;">E-mail *</label>
-        <input type="email" id="reg-email" placeholder="vas@email.com" style="margin-bottom:15px; width:100%;">
+        <label style="display:block; margin-bottom:5px; font-size: 0.9rem;">E-mail *</label>
+        <input type="email" id="reg-email" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
         
-        <label style="display:block; margin-bottom:5px;">Telefónne číslo *</label>
-        <input type="tel" id="reg-tel" placeholder="+421 900 000 000" style="margin-bottom:15px; width:100%;">
+        <label style="display:block; margin-bottom:5px; font-size: 0.9rem;">Telefónne číslo *</label>
+        <input type="tel" id="reg-tel" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
         
-        <div style="font-size: 0.8rem; color: #bbb; margin-bottom: 20px; display:flex; gap:10px; align-items:flex-start;">
-            <input type="checkbox" id="souhlas" style="width:auto; margin:0; cursor:pointer;"> 
-            <span>Súhlasím s podmienkami a beriem na vedomie prenos poplatku na kredit. *</span>
+        <label style="display:block; margin-bottom:5px; font-size: 0.9rem;">Ste členom ŠK Bellator? *</label>
+        <select id="reg-clen" onchange="aktualizujCenuVRegistracii()" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
+            <option value="Nie">Nie, nie som členom (86 €)</option>
+            <option value="Ano">Áno, som členom ŠK Bellator (70 €)</option>
+        </select>
+
+        <div id="cena-v-reg" style="text-align: center; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; color: var(--army-olive);">
+            Cena k úhrade: 86 €
         </div>
+
+        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 25px;">
+    <input type="checkbox" id="souhlas" style="width: 18px; height: 18px; cursor: pointer; accent-color: #8a9a5b;"> 
+    <label for="souhlas" style="color: #bbb; font-size: 0.8rem; cursor: pointer;">
+        Súhlasím s <span onclick="document.getElementById('modalPodmienky').style.display='flex'" style="color: #8a9a5b; text-decoration: underline; font-weight: bold;">podmienkami rezervácie</span> *
+    </label>
+</div>
         
-        <button class="btn-main-modern" onclick="odoslatFinalnuRezervaciu('${termin}')" style="width:100%; margin-bottom: 10px;">
-            <span>PREJSŤ K PLATBE</span>
-            <i class="fas fa-credit-card"></i>
+        <button onclick="odoslatFinalnuRezervaciu('${datum}', '${typ}')" class="btn-main-modern" style="width:100%; margin-bottom: 10px; padding: 12px; background: var(--army-olive); color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+            POTVRDIŤ REGISTRÁCIU
         </button>
         
-        <button onclick="otvoritDetail('${povodniTyp}')" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
-            <i class="fas fa-arrow-left"></i> <span>Späť</span>
+        <button onclick="otvoritDetail('${typ}')" style="background: transparent; color: #fff; border: 1px solid #fff; width: 100%; padding: 10px; border-radius: 6px; cursor: pointer;">
+            Späť
         </button>
     `;
 }
 
-function odoslatFinalnuRezervaciu(termin) {
-    const meno = document.getElementById('reg-meno').value;
-    const priezvisko = document.getElementById('reg-priezvisko').value;
-    const email = document.getElementById('reg-email').value;
+// TÚTO FUNKCIU PRIDAJ NIEKDE DO SCRIPT.JS
+function aktualizujCenuVRegistracii() {
+    const clen = document.getElementById('reg-clen').value;
+    const cenaDisplay = document.getElementById('cena-v-reg');
+    if (clen === 'Ano') {
+        cenaDisplay.innerText = "Cena k úhrade: 70 €";
+    } else {
+        cenaDisplay.innerText = "Cena k úhrade: 86 €";
+    }
+
+}
+
+async function odoslatFinalnuRezervaciu(datum, typ) {
+    // 1. Získanie hodnôt z polí
+    const meno = document.getElementById('reg-meno').value.trim();
+    const priezvisko = document.getElementById('reg-priezvisko').value.trim();
+    const email = document.getElementById('reg-email').value.trim();
+    const tel = document.getElementById('reg-tel').value.trim();
+    const clen = document.getElementById('reg-clen').value;
     const suhlas = document.getElementById('souhlas').checked;
 
+    // 2. Kontrola, či niečo nie je prázdne
+    if (!meno || !priezvisko || !email || !tel) {
+        alert("⚠️ Prosím, vyplňte všetky povinné polia.");
+        return; // Zastaví funkciu
+    }
+
+    // 3. Kontrola formátu e-mailu (musí mať @ a bodku)
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("⚠️ Zadajte platnú e-mailovú adresu (napr. meno@email.sk).");
+        return; // Zastaví funkciu
+    }
+
+    // 4. Kontrola telefónu (aspoň 10 číslic, môže začať +)
+    // Odstránime medzery pre kontrolu
+    const cisteCislo = tel.replace(/\s/g, '');
+    const telRegex = /^(\+421|0)9[0-9]{8}$/; // Štandard pre SK čísla
+    
+    if (!telRegex.test(cisteCislo)) {
+        alert("⚠️ Zadajte platné slovenské telefónne číslo (napr. 09xx xxx xxx).");
+        return; // Zastaví funkciu
+    }
+
+    // 5. Kontrola súhlasu s podmienkami
+    if (!suhlas) {
+        alert("⚠️ Musíte súhlasiť s podmienkami rezervácie.");
+        return; // Zastaví funkciu
+    }
+
+    // --- AK KÓD PREŠIEL AŽ SEM, ÚDAJE SÚ SPRÁVNE A MÔŽEME ICH ODOSLAŤ ---
+    
+    try {
+        const { data, error } = await _supabase
+            .from('rezervacie')
+            .insert([
+                { 
+                    meno: meno, 
+                    priezvisko: priezvisko, 
+                    email: email, 
+                    telefon: tel, 
+                    je_clen: clen === 'Ano',
+                    datum_kurzu: datum,
+                    typ_kurzu: typ
+                }
+            ]);
+
+        if (error) throw error;
+
+        alert("✅ Registrácia bola úspešná! Skontrolujte si e-mail.");
+        zatvoritDetail();
+
+    } catch (err) {
+        console.error("Chyba pri zápise:", err);
+        alert("Nepodarilo sa odoslať dáta: " + err.message);
+    }
+
     if (!meno || !priezvisko || !email || !suhlas) {
-        alert("Prosím vyplňte všetky povinné údaje a potvrďte súhlas.");
+        alert("Prosím vyplňte všetky povinné údaje.");
         return;
     }
-    
-    if(kapacity[termin]) kapacity[termin] -= 1;
-    alert(`Ďakujeme, ${meno} ${priezvisko}! Budete presmerovaný k platbe.`);
-    zatvoritDetail();
-}
 
-function zatvoritDetail() {
-    document.getElementById('courseModal').style.display = "none";
-    document.body.style.overflow = "auto";
-}
+    try {
+        console.log("Pripravujem zápis do Supabase pre:", meno);
 
-window.onclick = function(event) {
-    const modal = document.getElementById('courseModal');
-    if (event.target == modal) zatvoritDetail();
-}
+        // 2. ZÁPIS DO DATABÁZY (tu používame await, aby kód počkal na odpoveď)
+        const { data, error } = await _supabase
+            .from('rezervacie')
+            .insert([
+                { 
+                    meno: meno, 
+                    priezvisko: priezvisko, 
+                    email: email, 
+                    telefon: telefon,
+                    clen_klubu: clen,
+                    datum_kurzu: datum,
+                    typ_kurzu: typ
+                }
+            ]);
 
-function otvoritModalVseobecny(typ) {
-    const modal = document.getElementById('courseModal');
-    const textPanel = document.querySelector('.modal-text');
-    const infoPanel = document.querySelector('.modal-info-panel');
+        // 3. Kontrola, či Supabase nevrátila chybu
+        if (error) {
+            console.error("Supabase error:", error);
+            alert("Chyba v databáze: " + error.message);
+            return; // Zastavíme funkciu, aby sa neukázalo poďakovanie
+        }
+
+        // 4. Ak všetko prebehlo OK, až vtedy prepíšeme panel
+        console.log("Zápis úspešný!");
+        
+        const wrapper = document.getElementById('side-content-wrapper');
+        wrapper.innerHTML = `
+            <div style="text-align: center; padding: 40px 10px;">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: #8a9a5b; margin-bottom: 20px;"></i>
+                <h3 style="color: #fff;">Rezervácia úspešná!</h3>
+                <p style="color: #ccc;">Ďakujeme, ${meno}. Vaše miesto je rezervované.</p>
+                <button onclick="zatvoritDetail()" style="margin-top:20px; padding:10px 20px; background:#8a9a5b; color:#fff; border:none; border-radius:4px; cursor:pointer;">ZAVRIEŤ</button>
+            </div>
+        `;
+
+    } catch (err) {
+        // 5. Zachytenie neočakávaných chýb (napr. zlá URL k Supabase)
+        console.error("Kritická chyba:", err);
+        alert("Nepodarilo sa odoslať dáta: " + err.message);
+    }
+
+
 
     if (typ === 'stanovy') {
         // --- SEKCIA STANOVY ---
@@ -474,4 +699,44 @@ function otvoritModalVseobecny(typ) {
     // --- TOTO JE DÔLEŽITÉ PRE ZOBRAZENIE MODALU ---
     modal.style.display = "flex";
     document.body.style.overflow = "hidden";
+}
+function zatvoritDetail() {
+    const modal = document.getElementById('courseModal');
+    if (modal) {
+        modal.style.display = "none"; // Skryje celý čierny panel
+    }
+    document.body.style.overflow = "auto"; // Vráti možnosť skrolovania stránky
+    
+    // Vyčistíme URL (odstránime #kurz-xxx)
+    window.history.pushState({}, "", window.location.pathname);
+}
+async function zistiVolneMesta(datum) {
+    const { count, error } = await _supabase
+        .from('rezervacie')
+        .select('*', { count: 'exact', head: true })
+        .eq('datum_kurzu', datum);
+
+    if (error) {
+        console.error("Chyba pri počítaní:", error);
+        return 10; // Ak je chyba, vrátime predvolených 10
+    }
+    
+    const maximalnaKapacita = 10;
+    return maximalnaKapacita - (count || 0);
+}
+async function zistiVolneMesta(datum) {
+    try {
+        const { count, error } = await _supabase
+            .from('rezervacie')
+            .select('*', { count: 'exact', head: true })
+            .eq('datum_kurzu', datum);
+
+        if (error) throw error;
+
+        const maximalnaKapacita = 10;
+        return maximalnaKapacita - (count || 0);
+    } catch (err) {
+        console.error("Chyba pri načítaní kapacity:", err);
+        return 10;
+    }
 }

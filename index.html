@@ -10,6 +10,7 @@
     <meta property="og:image" content="https://bellatorarmory-bit.github.io/bellator-rezervacie-kurzov/assets/logo.png">
     <meta property="og:url" content="https://bellatorarmory-bit.github.io/bellator-rezervacie-kurzov/">
     <meta property="og:type" content="website">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
@@ -63,15 +64,6 @@
                     <h3>Základný kurz a manipulácia</h3>
                     <p>Osvojte si bezpečné základy, legislatívu a prvý kontakt so zbraňou pod dohľadom odborníkov.</p>
                     <button onclick="otvoritDetail('zakladny')">Zobraziť detaily</button>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-image" style="background-image: url('img/HS-pomoc.png')"></div>
-                <div class="card-content">
-                    <h3>Prvá pomoc - strelné poranenia</h3>
-                    <p>Špeciálny kurz zameraný na masívne krvácanie a traumatické stavy v bojových podmienkach.</p>
-                    <button onclick="otvoritDetail('prvapomoc')">Zobraziť detaily</button>
                 </div>
             </div>
 
@@ -208,5 +200,29 @@
     </div>
 
     <script src="script.js"></script>
+    
+<div id="modalPodmienky" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); z-index: 10002; align-items: center; justify-content: center; padding: 20px;">
+    <div style="background: #1a1a1a; border: 1px solid #8a9a5b; border-radius: 8px; max-width: 600px; width: 100%; max-height: 80vh; display: flex; flex-direction: column; box-shadow: 0 0 30px rgba(0,0,0,0.5);">
+        
+        <div style="padding: 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="color: #8a9a5b; margin: 0; font-family: 'Rajdhani', sans-serif; text-transform: uppercase;">Podmienky rezervácie</h3>
+            <button onclick="document.getElementById('modalPodmienky').style.display='none'" style="background: transparent; border: none; color: #666; font-size: 1.5rem; cursor: pointer;">&times;</button>
+        </div>
+
+        <div style="padding: 25px; overflow-y: auto; color: #ccc; line-height: 1.6; font-size: 0.9rem;">
+            <p><strong>1. Platba:</strong> Rezervácia je záväzná. Miesto na kurze je garantované až po pripísaní plnej sumy na účet alebo po úhrade v hotovosti na strelnici.</p>
+            <p><strong>2. Splatnosť:</strong> Úhradu je potrebné vykonať do 5 dní od rezervácie, najneskôr však 1 deň pred začatím kurzu. Pri prihlásení neskôr je nutná okamžitá úhrada.</p>
+            <p><strong>3. Storno podmienky:</strong> Uhradený poplatok sa nevracia. V prípade odhlásenia aspoň 48 hodín pred začiatkom kurzu sa celá suma presúva ako kredit na iný termín alebo kurz.</p>
+            <p><strong style="color: #fff;">4. Bezpečnosť a pravidlá</strong><br>
+            Účastník je povinný prísť v triezvom stave (žiaden alkohol ani iné látky). Inštruktor má právo vylúčiť kohokoľvek, kto ohrozuje bezpečnosť seba alebo ostatných, bez nároku na vrátenie poplatku.</p>
+            <p><strong>5. Povinnosti:</strong> Účastník je povinný dodržiavať bezpečnostné pokyny inštruktora a prevádzkový poriadok strelnice.</p>
+            <p><strong>6. GDPR:</strong> Odoslaním formulára súhlasíte so spracovaním osobných údajov pre účely administrácie tejto rezervácie.</p>
+        </div>
+
+        <div style="padding: 20px; border-top: 1px solid #333; text-align: center;">
+            <button onclick="document.getElementById('modalPodmienky').style.display='none'" style="background: #8a9a5b; color: #fff; border: none; padding: 10px 30px; border-radius: 4px; font-weight: bold; cursor: pointer; text-transform: uppercase;">Rozumiem</button>
+        </div>
+    </div>
+</div>
 </body>
 </html>
