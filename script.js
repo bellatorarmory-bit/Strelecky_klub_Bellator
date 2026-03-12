@@ -100,8 +100,10 @@ async function otvoritDetail(typKurzu) {
     const modal = document.getElementById('courseModal');
     const textPanel = document.querySelector('.modal-text');
     const infoPanel = document.querySelector('.modal-info-panel');
-    window.history.pushState({}, '', `?kurz=${typ}`);
-    
+
+    // 1. AKTUALIZÁCIA URL - toto musí byť správne pomenované
+    // Použijeme formát s otazníkom, ten je pre hľadanie spoľahlivejší
+    window.history.pushState({kurz: typKurzu}, '', `?kurz=${typKurzu}`);
 
     // 1. VYČISTENIE PANELOV
     textPanel.innerHTML = "";
@@ -743,12 +745,24 @@ async function zistiVolneMesta(datum) {
     }
 }
 // Spustí sa automaticky pri načítaní stránky
-window.addEventListener('load', () => {
+// TOTO ZABEZPEČÍ OTVORENIE PRI NAČÍTANÍ STRÁNKY
+window.addEventListener('popstate', (event) => {
+    // Ak používateľ klikne na tlačidlo "Späť" v prehliadači
+    if (event.state && event.state.kurz) {
+        otvoritDetail(event.state.kurz);
+    } else {
+        zatvoritDetail();
+    }
+});
+
+document.addEventListener('DOMContentLoaded', () => {
     const urlParams = new URLSearchParams(window.location.search);
     const kurzZLinku = urlParams.get('kurz');
 
     if (kurzZLinku) {
-        // Ak v linku našiel napr. ?kurz=zakladny, automaticky ho otvorí
-        otvoritDetail(kurzZLinku);
+        // Počkáme sekundu, kým sa všetko načíta a potom otvoríme
+        setTimeout(() => {
+            otvoritDetail(kurzZLinku);
+        }, 300);
     }
 });
