@@ -100,6 +100,7 @@ async function otvoritDetail(typKurzu) {
     const modal = document.getElementById('courseModal');
     const textPanel = document.querySelector('.modal-text');
     const infoPanel = document.querySelector('.modal-info-panel');
+    window.history.pushState({}, '', `?kurz=${typ}`);
     
 
     // 1. VYČISTENIE PANELOV
@@ -701,6 +702,7 @@ async function odoslatFinalnuRezervaciu(datum, typ) {
     document.body.style.overflow = "hidden";
 }
 function zatvoritDetail() {
+    window.history.pushState({}, '', window.location.pathname);
     const modal = document.getElementById('courseModal');
     if (modal) {
         modal.style.display = "none"; // Skryje celý čierny panel
