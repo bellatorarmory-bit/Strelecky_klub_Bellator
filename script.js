@@ -97,13 +97,18 @@ wrapper.innerHTML = `
 }
 // --- 2. HLAVNÁ FUNKCIA OTVORENIA DETAILU ---
 async function otvoritDetail(typKurzu) {
+    console.log("Pokúšam sa otvoriť kurz:", typKurzu); // Toto nám povie, či funkcia vôbec beží
     const modal = document.getElementById('courseModal');
+    if (!modal) {
+        console.error("Chyba: Element 'courseModal' neexistuje v HTML!");
+        return;
+    }
     const textPanel = document.querySelector('.modal-text');
     const infoPanel = document.querySelector('.modal-info-panel');
 
     // 1. AKTUALIZÁCIA URL - toto musí byť správne pomenované
     // Použijeme formát s otazníkom, ten je pre hľadanie spoľahlivejší
-   window.history.pushState({kurz: typKurzu}, '', '#kurz-' + typKurzu);
+  window.history.pushState(null, '', '#kurz-' + typKurzu);
 
     // 1. VYČISTENIE PANELOV
     textPanel.innerHTML = "";
