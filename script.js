@@ -112,6 +112,7 @@ async function otvoritDetail(typKurzu) {
     // 2. AKTUALIZÁCIA URL (Pre účely propagácie)
     // Ak niekto klikne na kurz, v adresnom riadku sa zjaví napr. #kurz-zakladny
     window.history.pushState({kurz: typKurzu}, "", "#kurz-" + typKurzu);
+    modal.style.display = 'flex';
     
 if (typKurzu === 'domov') {
         // --- OCHRANA OBYDLIA (HOME DEFENCE) ---
