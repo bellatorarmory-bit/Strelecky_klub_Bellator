@@ -279,7 +279,7 @@ if (typKurzu === 'domov') {
                 <li><strong>Streľba na terč:</strong> Prenesenie teórie do praxe pod dohľadom inštruktora.</li>
             </ul>
             <h4><i class="fas fa-info-circle"></i> TECHNICKÉ DETAILY:</h4>
-            <div class="obsah-sekcia"><i class="fas fa-clock"></i> <div><strong>Trvanie:</strong> 4 hodiny</div></div>
+            <div class="obsah-sekcia"><i class="fas fa-clock"></i> <div><strong>Trvanie:</strong> 3 hodiny</div></div>
             <div class="obsah-sekcia"><i class="fas fa-briefcase"></i> <div><strong>Vybavenie:</strong> Nemáte vlastnú výstroj? Vhodnú zbraň aj pomôcky si môžete vybrať na mieste.</div></div>
             <div class="obsah-sekcia"><i class="fas fa-gun"></i> <div><strong>Strelivo:</strong> Vlastné, alebo možnosť zakúpenia priamo na strelnici.</div></div>
         `;
@@ -297,7 +297,7 @@ if (typKurzu === 'domov') {
                     <div class="termin-item">
                         <div class="termin-info">
                             <i class="far fa-calendar-check"></i>
-                            <span style="display:block;">11. 04. 2026 (Sobota) o 12:00</span>
+                            <span style="display:block;">11. 04. 2026 (Sobota) o 10:00</span>
                             <span style="font-size: 0.8rem; display:block; margin-top: 5px; color: ${volneMesta < 3 ? '#ff4d4d' : '#88b04b'};">
                                 Voľné miesta: <strong>${volneMesta} / 10</strong>
                             </span>
