@@ -103,7 +103,7 @@ async function otvoritDetail(typKurzu) {
 
     // 1. AKTUALIZÁCIA URL - toto musí byť správne pomenované
     // Použijeme formát s otazníkom, ten je pre hľadanie spoľahlivejší
-    window.history.pushState({kurz: typKurzu}, '', `?kurz=${typKurzu}`);
+   window.history.pushState({kurz: typKurzu}, '', '#kurz-' + typKurzu);
 
     // 1. VYČISTENIE PANELOV
     textPanel.innerHTML = "";
@@ -766,3 +766,23 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 300);
     }
 });
+// Funkcia, ktorá skontroluje mriežku v URL a otvorí kurz
+function checkUrlHash() {
+    const hash = window.location.hash; // získa napr. "#kurz-zakladny"
+    if (hash && hash.startsWith('#kurz-')) {
+        const typZHashu = hash.replace('#kurz-', '');
+        
+        // Malé oneskorenie, aby sa stihlo načítať HTML
+        setTimeout(() => {
+            if (typeof otvoritDetail === 'function') {
+                otvoritDetail(typZHashu);
+            }
+        }, 300);
+    }
+}
+
+// Spusti kontrolu pri načítaní stránky
+window.addEventListener('load', checkUrlHash);
+
+// Spusti kontrolu, ak niekto klikne na tlačidlo "Späť" alebo zmení hash ručne
+window.addEventListener('hashchange', checkUrlHash);
