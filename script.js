@@ -461,38 +461,36 @@ async function odoslatFinalnuRezervaciu(datum, typ) {
     const clen = document.getElementById('reg-clen').value;
     const suhlas = document.getElementById('souhlas').checked;
 
-    // 2. Kontrola, či niečo nie je prázdne
+    // 2. Kontrola prázdnych polí a súhlasu
     if (!meno || !priezvisko || !email || !tel) {
         alert("⚠️ Prosím, vyplňte všetky povinné polia.");
-        return; // Zastaví funkciu
+        return;
     }
 
-    // 3. Kontrola formátu e-mailu (musí mať @ a bodku)
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        alert("⚠️ Zadajte platnú e-mailovú adresu (napr. meno@email.sk).");
-        return; // Zastaví funkciu
-    }
-
-    // 4. Kontrola telefónu (aspoň 10 číslic, môže začať +)
-    // Odstránime medzery pre kontrolu
-    const cisteCislo = tel.replace(/\s/g, '');
-    const telRegex = /^(\+421|0)9[0-9]{8}$/; // Štandard pre SK čísla
-    
-    if (!telRegex.test(cisteCislo)) {
-        alert("⚠️ Zadajte platné slovenské telefónne číslo (napr. 09xx xxx xxx).");
-        return; // Zastaví funkciu
-    }
-
-    // 5. Kontrola súhlasu s podmienkami
     if (!suhlas) {
         alert("⚠️ Musíte súhlasiť s podmienkami rezervácie.");
-        return; // Zastaví funkciu
+        return;
     }
 
-    // --- AK KÓD PREŠIEL AŽ SEM, ÚDAJE SÚ SPRÁVNE A MÔŽEME ICH ODOSLAŤ ---
-    
+    // 3. Kontrola formátu e-mailu
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("⚠️ Zadajte platnú e-mailovú adresu.");
+        return;
+    }
+
+    // 4. Kontrola telefónu (odstránime medzery a skontrolujeme formát)
+    const cisteCislo = tel.replace(/\s/g, '');
+    const telRegex = /^(\+421|0)9[0-9]{8}$/; 
+    if (!telRegex.test(cisteCislo)) {
+        alert("⚠️ Zadajte platné slovenské telefónne číslo (napr. 09xx xxx xxx).");
+        return;
+    }
+
+    // --- ZÁPIS DO DATABÁZY ---
     try {
+        console.log("Odosielam rezerváciu pre:", meno, priezvisko);
+
         const { data, error } = await _supabase
             .from('rezervacie')
             .insert([
@@ -500,71 +498,36 @@ async function odoslatFinalnuRezervaciu(datum, typ) {
                     meno: meno, 
                     priezvisko: priezvisko, 
                     email: email, 
-                    telefon: tel, 
+                    telefon: tel, // Opravené: používame premennú 'tel'
                     je_clen: clen === 'Ano',
                     datum_kurzu: datum,
                     typ_kurzu: typ
                 }
             ]);
 
-        if (error) throw error;
-
-        alert("✅ Registrácia bola úspešná! Skontrolujte si e-mail.");
-        zatvoritDetail();
-
-    } catch (err) {
-        console.error("Chyba pri zápise:", err);
-        alert("Nepodarilo sa odoslať dáta: " + err.message);
-    }
-
-    if (!meno || !priezvisko || !email || !suhlas) {
-        alert("Prosím vyplňte všetky povinné údaje.");
-        return;
-    }
-
-    try {
-        console.log("Pripravujem zápis do Supabase pre:", meno);
-
-        // 2. ZÁPIS DO DATABÁZY (tu používame await, aby kód počkal na odpoveď)
-        const { data, error } = await _supabase
-            .from('rezervacie')
-            .insert([
-                { 
-                    meno: meno, 
-                    priezvisko: priezvisko, 
-                    email: email, 
-                    telefon: telefon,
-                    clen_klubu: clen,
-                    datum_kurzu: datum,
-                    typ_kurzu: typ
-                }
-            ]);
-
-        // 3. Kontrola, či Supabase nevrátila chybu
         if (error) {
             console.error("Supabase error:", error);
             alert("Chyba v databáze: " + error.message);
-            return; // Zastavíme funkciu, aby sa neukázalo poďakovanie
+            return;
         }
 
-        // 4. Ak všetko prebehlo OK, až vtedy prepíšeme panel
-        console.log("Zápis úspešný!");
-        
+        // 5. Úspešné zobrazenie potvrdenia priamo v paneli
         const wrapper = document.getElementById('side-content-wrapper');
         wrapper.innerHTML = `
-            <div style="text-align: center; padding: 40px 10px;">
+            <div style="text-align: center; padding: 40px 10px; animation: fadeIn 0.5s;">
                 <i class="fas fa-check-circle" style="font-size: 4rem; color: #8a9a5b; margin-bottom: 20px;"></i>
-                <h3 style="color: #fff;">Rezervácia úspešná!</h3>
-                <p style="color: #ccc;">Ďakujeme, ${meno}. Vaše miesto je rezervované.</p>
-                <button onclick="zatvoritDetail()" style="margin-top:20px; padding:10px 20px; background:#8a9a5b; color:#fff; border:none; border-radius:4px; cursor:pointer;">ZAVRIEŤ</button>
+                <h3 style="color: #fff; font-family: 'Rajdhani', sans-serif;">REZERVÁCIA ÚSPEŠNÁ!</h3>
+                <p style="color: #ccc;">Ďakujeme, ${meno}. Vaše miesto na kurze (${datum}) bolo úspešne zaznamenané.</p>
+                <p style="color: #8a9a5b; font-size: 0.9rem; margin-top: 10px;">Potvrdzujúci e-mail s inštrukciami k platbe je na ceste.</p>
+                <button onclick="zatvoritDetail()" style="margin-top:30px; width: 100%; padding:12px; background:#8a9a5b; color:#fff; border:none; border-radius:4px; font-weight:bold; cursor:pointer; text-transform: uppercase;">ZAVRIEŤ</button>
             </div>
         `;
 
     } catch (err) {
-        // 5. Zachytenie neočakávaných chýb (napr. zlá URL k Supabase)
         console.error("Kritická chyba:", err);
         alert("Nepodarilo sa odoslať dáta: " + err.message);
     }
+
 
 
 
