@@ -458,39 +458,21 @@ async function odoslatFinalnuRezervaciu(datum, typ) {
     const priezvisko = document.getElementById('reg-priezvisko').value.trim();
     const email = document.getElementById('reg-email').value.trim();
     const tel = document.getElementById('reg-tel').value.trim();
-    const clen = document.getElementById('reg-clen').value;
+    const clen = document.getElementById('reg-clen').value; // Tu berieme text z výberu (Áno/Nie)
     const suhlas = document.getElementById('souhlas').checked;
 
-    // 2. Kontrola prázdnych polí a súhlasu
+    // 2. Základné kontroly
     if (!meno || !priezvisko || !email || !tel) {
         alert("⚠️ Prosím, vyplňte všetky povinné polia.");
         return;
     }
-
     if (!suhlas) {
-        alert("⚠️ Musíte súhlasiť s podmienkami rezervácie.");
+        alert("⚠️ Pre pokračovanie musíte súhlasiť s podmienkami.");
         return;
     }
 
-    // 3. Kontrola formátu e-mailu
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-        alert("⚠️ Zadajte platnú e-mailovú adresu.");
-        return;
-    }
-
-    // 4. Kontrola telefónu (odstránime medzery a skontrolujeme formát)
-    const cisteCislo = tel.replace(/\s/g, '');
-    const telRegex = /^(\+421|0)9[0-9]{8}$/; 
-    if (!telRegex.test(cisteCislo)) {
-        alert("⚠️ Zadajte platné slovenské telefónne číslo (napr. 09xx xxx xxx).");
-        return;
-    }
-
-    // --- ZÁPIS DO DATABÁZY ---
+    // 3. Zápis do Supabase - Názvy vľavo musia SEDIEŤ s tvojím screenshotom!
     try {
-        console.log("Odosielam rezerváciu pre:", meno, priezvisko);
-
         const { data, error } = await _supabase
             .from('rezervacie')
             .insert([
@@ -498,35 +480,30 @@ async function odoslatFinalnuRezervaciu(datum, typ) {
                     meno: meno, 
                     priezvisko: priezvisko, 
                     email: email, 
-                    telefon: tel, // Opravené: používame premennú 'tel'
-                    je_clen: clen === 'Ano',
-                    datum_kurzu: datum,
-                    typ_kurzu: typ
+                    telefon: tel,           // tvoja tabuľka má stĺpec 'telefon'
+                    clen_klubu: clen,      // tvoja tabuľka má stĺpec 'clen_klubu'
+                    datum_kurzu: datum,    // tvoja tabuľka má stĺpec 'datum_kurzu'
+                    typ_kurzu: typ         // tvoja tabuľka má stĺpec 'typ_kurzu'
                 }
             ]);
 
-        if (error) {
-            console.error("Supabase error:", error);
-            alert("Chyba v databáze: " + error.message);
-            return;
-        }
+        if (error) throw error;
 
-        // 5. Úspešné zobrazenie potvrdenia priamo v paneli
-        const wrapper = document.getElementById('side-content-wrapper');
-        wrapper.innerHTML = `
-            <div style="text-align: center; padding: 40px 10px; animation: fadeIn 0.5s;">
+        // 4. Úspech - zobrazenie potvrdenia
+        document.getElementById('side-content-wrapper').innerHTML = `
+            <div style="text-align: center; padding: 40px 10px;">
                 <i class="fas fa-check-circle" style="font-size: 4rem; color: #8a9a5b; margin-bottom: 20px;"></i>
-                <h3 style="color: #fff; font-family: 'Rajdhani', sans-serif;">REZERVÁCIA ÚSPEŠNÁ!</h3>
-                <p style="color: #ccc;">Ďakujeme, ${meno}. Vaše miesto na kurze (${datum}) bolo úspešne zaznamenané.</p>
-                <p style="color: #8a9a5b; font-size: 0.9rem; margin-top: 10px;">Potvrdzujúci e-mail s inštrukciami k platbe je na ceste.</p>
-                <button onclick="zatvoritDetail()" style="margin-top:30px; width: 100%; padding:12px; background:#8a9a5b; color:#fff; border:none; border-radius:4px; font-weight:bold; cursor:pointer; text-transform: uppercase;">ZAVRIEŤ</button>
+                <h3 style="color: #fff;">REZERVÁCIA ÚSPEŠNÁ!</h3>
+                <p style="color: #ccc;">Ďakujeme, ${meno}. Vaša registrácia na kurz bola uložená.</p>
+                <button onclick="zatvoritDetail()" style="margin-top:20px; width:100%; padding:12px; background:#8a9a5b; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">ZAVRIEŤ</button>
             </div>
         `;
 
     } catch (err) {
-        console.error("Kritická chyba:", err);
+        console.error("Chyba:", err);
         alert("Nepodarilo sa odoslať dáta: " + err.message);
     }
+
 
 
 
