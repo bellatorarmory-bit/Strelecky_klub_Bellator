@@ -97,6 +97,7 @@ wrapper.innerHTML = `
 }
 // --- 2. HLAVNÁ FUNKCIA OTVORENIA DETAILU ---
 async function otvoritDetail(typKurzu) {
+    
     console.log("Pokúšam sa otvoriť kurz:", typKurzu); // Toto nám povie, či funkcia vôbec beží
     const modal = document.getElementById('courseModal');
     if (!modal) {
@@ -387,6 +388,54 @@ if (typKurzu === 'domov') {
 
     modal.style.display = "flex";
     document.body.style.overflow = "hidden";
+}
+// --- 2. FUNKCIA PRE ČLENSTVO A STANOVY (Všeobecné info) ---
+function otvoritModalVseobecny(typ) {
+    const modal = document.getElementById('courseModal');
+    const textPanel = document.querySelector('.modal-text');
+    const infoPanel = document.querySelector('.modal-info-panel');
+
+    if (!modal) return;
+
+    textPanel.innerHTML = "";
+    infoPanel.innerHTML = "";
+
+    if (typ === 'clenstvo') {
+        textPanel.innerHTML = `
+            <div class="stanovy-header" style="border-bottom: 2px solid #8a9a5b; margin-bottom: 20px; padding-bottom: 10px;">
+                <h2 style="margin:0; color: #ffffff;">ČLENSTVO V KLUBE</h2>
+                <p style="color: #8a9a5b; font-weight: bold; margin: 5px 0 0 0;">Strelecký klub Bellator o.z.</p>
+            </div>
+            <div class="membership-content" style="color: #ffffff; line-height: 1.6; font-size: 0.95rem;">
+                <div style="background: rgba(138, 154, 91, 0.15); border: 1px solid #8a9a5b; padding: 15px; border-radius: 8px; margin-bottom: 25px;">
+                    <h4 style="color: #8a9a5b; margin-top: 0;">
+                        <i class="fas fa-id-card" style="margin-right: 10px;"></i> ČLENSKÝ PRÍSPEVOK A VÝHODY
+                    </h4>
+                    <p style="font-size: 1.1rem; font-weight: bold; margin-bottom: 10px;">Ročný poplatok (365 dní): <span style="color: #8a9a5b;">120 €</span></p>
+                    <ul style="list-style: none; padding-left: 0;">
+                        <li><i class="fas fa-star" style="color:#8a9a5b;"></i> <strong>Karta člena:</strong> Každý člen obdrží kartu.</li>
+                        <li><i class="fas fa-check" style="color:#8a9a5b;"></i> <strong>20x voľný vstup:</strong> 30 min. na dráhu Bellator Armory.</li>
+                        <li><i class="fas fa-percent" style="color:#8a9a5b;"></i> <strong>Zľava 20%:</strong> Na prenájom dráhy po vyčerpaní kreditu.</li>
+                    </ul>
+                </div>
+                <h4 style="color: #8a9a5b;">AKO SA STAŤ ČLENOM:</h4>
+                <p>1. Stiahnite si prihlášku vpravo.<br>2. Doručte ju osobne na strelnicu v Trenčíne.<br>3. Po schválení obdržíte kartu.</p>
+            </div>
+        `;
+
+        infoPanel.innerHTML = `
+            <div style="background: #2b5797; color: #fff; padding: 20px; border-radius: 8px; text-align: center;">
+                <i class="fas fa-file-word" style="font-size: 2rem;"></i><br>
+                <strong>PRIHLÁŠKA ZA ČLENA</strong>
+            </div>
+            <a href="docs/Prihlaska_Bellator.docx" download class="btn-main-modern" style="text-decoration:none; display:block; text-align:center; background:#fff; color:#000; padding:15px; border-radius:6px; margin-top:20px; font-weight:bold;">
+                STIAHNUŤ TLAČIVO <i class="fas fa-download"></i>
+            </a>
+            <button onclick="zatvoritDetail()" style="background:transparent; border:1px solid #fff; color:#fff; width:100%; margin-top:15px; padding:10px; cursor:pointer;">ZAVRIEŤ</button>
+        `;
+    }
+
+    modal.style.display = 'flex';
 }
 
 // --- 3. POMOCNÉ FUNKCIE PRE KURZY ---
