@@ -1,6 +1,6 @@
 const kapacity = {
     "11.04.2026": 10,
-    "12.04.2026": 10,
+    "16.05.2026": 10,
     "13.04.2026": 10
 };
 // 1. Inicializácia (Doplň svoje údaje zo Settings -> API)
@@ -120,68 +120,10 @@ async function otvoritDetail(typKurzu) {
     window.history.pushState({kurz: typKurzu}, "", "#kurz-" + typKurzu);
     modal.style.display = 'flex';
     
-if (typKurzu === 'domov') {
-        // --- OCHRANA OBYDLIA (HOME DEFENCE) ---
-        textPanel.innerHTML = `
-            <h2 id="modalTitle">Ochrana obydlia (Home Defence)</h2>
-            <img src="img/HS-home.webp" class="modal-img-small" alt="Ochrana obydlia">
-            
-            <div style="background: rgba(138, 154, 91, 0.1); border: 1px solid var(--army-olive); padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
-                <h3 style="margin: 0; color: var(--army-olive); letter-spacing: 1px;"><i class="fas fa-calendar-plus"></i> NOVÉ TERMÍNY PRIPRAVUJEME</h3>
-                <p style="color: #ccc; font-size: 0.9rem; margin-top: 5px;">Aktuálne zostavujeme harmonogram výcvikov na nadchádzajúce obdobie.</p>
-            </div>
-
-            <h4><i class="fas fa-bullseye"></i> CIEĽOM KURZU JE:</h4>
-            <ul style="margin-bottom: 20px;">
-                <li>zvýšiť bezpečnostné povedomie jednotlivca v prostredí vlastného obydlia,</li>
-                <li>naučiť účastníkov bezpečne a zákonne reagovať na hrozbu v obydlí,</li>
-                <li>zdokonaliť manipuláciu so zbraňou v <strong>defenzívnom a stresovom prostredí</strong>,</li>
-                <li>zlepšiť rozhodovanie, orientáciu a sebaovládanie v krízovej situácii.</li>
-            </ul>
-
-            <h4><i class="fas fa-users"></i> CIEĽOVÁ SKUPINA:</h4>
-            <ul style="margin-bottom: 20px;">
-                <li>civilné osoby – držitelia zbrojného preukazu,</li>
-                <li>jednotlivci zaujímajúci sa o osobnú a rodinnú bezpečnosť,</li>
-                <li>osoby vykonávajúce sebaobranu v rámci zákona.</li>
-            </ul>
-
-            <h4><i class="fas fa-book"></i> OBSAH KURZU:</h4>
-            <div class="obsah-sekcia"><i class="fas fa-gavel"></i> 
-                <div><strong>1. Teoretická časť:</strong> Právny rámec použitia zbrane (nutná obrana, krajná núdza), prevencia a vyhodnocovanie rizík.</div>
-            </div>
-            <div class="obsah-sekcia">
-    <i class="fas fa-shield-alt"></i> 
-    <div><strong>2. Taktická príprava (defenzívna):</strong> Bezpečný pohyb v obydlí, práca s krytom a uhlami, ochrana blízkych.</div>
-</div>
-            <div class="obsah-sekcia"><i class="fas fa-crosshairs"></i> 
-                <div><strong>3. Strelecká časť:</strong> Manipulácia v interiéri, streľba v obmedzenom priestore a z defenzívnych pozícií.</div>
-            </div>
-            <div class="obsah-sekcia"><i class="fas fa-user-shield"></i> 
-                <div><strong>4. Modelové situácie:</strong> Narušenie obydlia, reakcia jednotlivca, rozhodovanie (únik vs. obrana) a ukončenie situácie.</div>
-            </div>
-        `;
-
-        infoPanel.innerHTML = `
-            <div class="info-box-modern">
-                <i class="fas fa-location-dot"></i>
-                <span><strong>Miesto výcviku:</strong><br>Strelnica Bellator Trenčín</span>
-            </div>
-            
-            <h4 class="select-title">Dostupné termíny:</h4>
-            <div class="terminy-container">
-                <p style="color: #bbb; font-size: 0.9rem; text-align: center; padding: 20px; border: 1px dashed #444; border-radius: 6px;">
-                    Nové termíny budú zverejnené čoskoro.
-                </p>
-            </div>
-
-            <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                <i class="fas fa-arrow-left" style="color: #ffffff !important;"></i> 
-                <span style="color: #ffffff !important;">Späť na ponuku</span>
-            </button>
-            
-            <div class="price-tag">120 € <span>vč. DPH</span></div>
-        `;
+if (typKurzu === 'aktivny_utocnik') {
+    // --- OBRANA PRED AKTÍVNYM ÚTOČNÍKOM ---
+    textPanel.innerHTML = ` ... `;
+    infoPanel.innerHTML = ` ... `;
 
     } else if (typKurzu === 'aktivny_utocnik') {
         // --- OBRANA PRED AKTÍVNYM ÚTOČNÍKOM ---
@@ -263,6 +205,88 @@ if (typKurzu === 'domov') {
                 <li>Praktické postupy použiteľné v reálnom živote.</li>
             </ul>
         `;
+        } else if (typKurzu === 'domov') {
+        // 1. Definujeme dátum pre tento kurz
+        const datumKurzu = "16.05.2026"; // Zjednotil som ti ho s textom v paneli, mala si tam 05.05.
+
+        // 2. Získame aktuálny počet voľných miest
+        const volneMesta = await zistiVolneMesta(datumKurzu);
+        const jePlno = volneMesta <= 0;
+
+        // --- ĽAVÝ PANEL (Popis kurzu) ---
+        textPanel.innerHTML = `
+            <h2 id="modalTitle">Ochrana obydlia (Home Defence)</h2>
+            <img src="img/HS-home.webp" class="modal-img-small" alt="Ochrana obydlia">
+            
+            <p style="font-style: italic; color: var(--army-olive); margin-bottom: 20px;">
+                "Váš domov je váš hrad, naučte sa ho brániť bezpečne a efektívne."
+            </p>
+
+            <h4><i class="fas fa-bullseye"></i> CIEĽOM KURZU JE:</h4>
+            <ul style="margin-bottom: 20px;">
+                <li>zvýšiť bezpečnostné povedomie v prostredí vlastného obydlia,</li>
+                <li>naučiť účastníkov bezpečne a zákonne reagovať na hrozbu,</li>
+                <li>zdokonaliť manipuláciu so zbraňou v stresovom prostredí,</li>
+                <li>zlepšiť rozhodovanie a orientáciu v krízovej situácii.</li>
+            </ul>
+
+            <h4><i class="fas fa-book"></i> OBSAH KURZU:</h4>
+            <div class="obsah-sekcia"><i class="fas fa-gavel"></i> 
+                <div><strong>1. Teoretická časť:</strong> Nutná obrana, krajná núdza a prevencia rizík.</div>
+            </div>
+            <div class="obsah-sekcia"><i class="fas fa-shield-alt"></i> 
+                <div><strong>2. Taktika:</strong> Bezpečný pohyb v budove, práca s krytom a ochrana blízkych.</div>
+            </div>
+            <div class="obsah-sekcia"><i class="fas fa-crosshairs"></i> 
+                <div><strong>3. Strelecká časť:</strong> Streľba v obmedzenom priestore a z defenzívnych pozícií.</div>
+            </div>
+        `;
+
+        // --- PRAVÝ PANEL (Registrácia a kapacity) ---
+        infoPanel.innerHTML = `
+            <div id="side-content-wrapper">
+                <div class="info-box-modern">
+                    <i class="fas fa-location-dot"></i>
+                    <span><strong>Miesto výcviku:</strong><br>Strelnica Bellator Trenčín</span>
+                </div>
+                
+                <h4 class="select-title">Dostupné termíny:</h4>
+                <div class="terminy-container">
+                    <div class="termin-item">
+                        <div class="termin-info">
+                            <i class="far fa-calendar-check"></i>
+                            <span style="display:block;">16. 05. 2026 (Sobota) o 10:00</span>
+                            <span style="font-size: 0.8rem; display:block; margin-top: 5px; color: ${volneMesta < 3 ? '#ff4d4d' : '#88b04b'};">
+                                Voľné miesta: <strong>${volneMesta} / 10</strong>
+                            </span>
+                        </div>
+                        <button class="btn-rezervovat" 
+                                ${jePlno ? 'disabled style="background:#444; color:#888; border-color:#444; cursor:not-allowed;"' : ''}
+                                onclick="zobrazitRegistraciu('${datumKurzu}', 'domov')">
+                            ${jePlno ? 'OBSADENÉ' : 'Vybrať <i class="fas fa-chevron-right"></i>'}
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fas fa-arrow-left"></i> 
+                    <span>Späť na ponuku</span>
+                </button>
+                
+                <div style="margin-top: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid #333;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Člen klubu</span>
+                        <span style="color: #8a9a5b; font-weight: bold; font-size: 1.4rem;">100 €</span>
+                    </div>
+                    <div style="height: 1px; background: #333; margin: 10px 0;"></div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Bežná cena</span>
+                        <span style="color: #fff; font-weight: bold; font-size: 1.4rem;">123 €</span>
+                    </div>
+                </div>
+            </div>
+        `;
+
      } else if (typKurzu === 'zakladny') {
     // 1. Definovanie dátumu pre tento konkrétny kurz
     const datumKurzu = "11.04.2026";
@@ -462,14 +486,15 @@ function zobrazitRegistraciu(datum, typ) {
         <label style="display:block; margin-bottom:5px; font-size: 0.9rem;">Telefónne číslo *</label>
         <input type="tel" id="reg-tel" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
         
-        <label style="display:block; margin-bottom:5px; font-size: 0.9rem;">Ste členom ŠK Bellator? *</label>
-        <select id="reg-clen" onchange="aktualizujCenuVRegistracii()" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
-            <option value="Nie">Nie, nie som členom (86 €)</option>
-            <option value="Ano">Áno, som členom ŠK Bellator (70 €)</option>
-        </select>
+        
+<label style="display:block; margin-bottom:5px; font-size: 0.9rem;">Ste členom ŠK Bellator? *</label>
+<select id="reg-clen" onchange="aktualizujCenuVRegistracii('${typ}')" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
+    <option value="Nie">Nie, nie som členom</option>
+    <option value="Ano">Áno, som členom ŠK Bellator</option>
+</select>
 
         <div id="cena-v-reg" style="text-align: center; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; color: var(--army-olive);">
-            Cena k úhrade: 86 €
+            Cena k úhrade: 123 € 
         </div>
 
         <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 25px;">
@@ -490,15 +515,48 @@ function zobrazitRegistraciu(datum, typ) {
 }
 
 // TÚTO FUNKCIU PRIDAJ NIEKDE DO SCRIPT.JS
-function aktualizujCenuVRegistracii() {
+function aktualizujCenuVRegistracii(typ) {
     const clen = document.getElementById('reg-clen').value;
     const cenaDisplay = document.getElementById('cena-v-reg');
+    
+    let cenaBezna = 0;
+    let cenaClen = 0;
+    let pociatocnaCena = (typ === 'domov') ? 123 : 100;
+
+    // Logika pre určenie cien podľa typu kurzu
+    if (typ === 'zakladny') {
+        cenaBezna = 86;
+        cenaClen = 70;
+    } 
+    else if (typ === 'domov') {
+        cenaBezna = 123;
+        cenaClen = 100;
+    } 
+    else if (typ === 'auto') {
+        cenaBezna = 150; // Doplň si reálnu cenu
+        cenaClen = 130;  // Doplň si reálnu cenu
+    } 
+    else if (typ === 'aktivny_utocnik') {
+        cenaBezna = 110; // Doplň si reálnu cenu
+        cenaClen = 90;   // Doplň si reálnu cenu
+    }
+    // Ak pridáš ďalšie kurzy, pridáš len ďalšie "else if"
+
+    // Samotné zobrazenie ceny
     if (clen === 'Ano') {
-        cenaDisplay.innerText = "Cena k úhrade: 70 €";
+        cenaDisplay.innerText = `Cena k úhrade: ${cenaClen} €`;
     } else {
-        cenaDisplay.innerText = "Cena k úhrade: 86 €";
+        cenaDisplay.innerText = `Cena k úhrade: ${cenaBezna} €`;
     }
 
+
+    // Pridaj ďalšie else if pre iné kurzy (auto, utocnik atď.)
+
+    if (clen === 'Ano') {
+        cenaDisplay.innerText = `Cena k úhrade: ${cenaClen} €`;
+    } else {
+        cenaDisplay.innerText = `Cena k úhrade: ${cenaBezna} €`;
+    }
 }
 
 async function odoslatFinalnuRezervaciu(datum, typ) {
