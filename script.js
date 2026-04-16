@@ -219,18 +219,10 @@ textPanel.innerHTML = `
 
             <img src="img/HS-home.webp" class="modal-img-small" alt="Ochrana obydlia">
     
+    
     <p style="font-style: italic; color: var(--army-olive); margin-bottom: 25px; border-left: 3px solid var(--army-olive); padding-left: 15px;">
         "Váš domov je váš hrad, naučte sa ho brániť bezpečne a efektívne."
     </p>
-
-    <h4 style="color: var(--army-olive); letter-spacing: 1px;"><i class="fas fa-bullseye"></i> CIEĽOM STRELECKO-TAKTICKÉHO KURZU JE:</h4>
-    <ul style="margin-bottom: 30px; list-style-type: none; padding-left: 0;">
-        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Zvýšiť úroveň osobnej bezpečnosti a pripravenosti v prostredí vlastného obydlia.</li>
-        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Naučiť účastníkov reagovať na hrozby rýchlo, efektívne a v súlade s legislatívou.</li>
-        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Zdokonaliť bezpečnú manipuláciu so zbraňou v dynamických situáciách.</li>
-        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Osvojiť si základy taktického pohybu a správneho využívania krytu.</li>
-        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Rozvíjať schopnosť rýchleho rozhodovania v krízových momentoch.</li>
-    </ul>
 
     <h4 style="color: var(--army-olive); letter-spacing: 1px;"><i class="fas fa-graduation-cap"></i> OBSAH STRELECKO-TAKTICKÉHO KURZU:</h4>
     
@@ -250,13 +242,22 @@ textPanel.innerHTML = `
         </div>
     </div>
 
-    <div class="obsah-sekcia" style="margin-bottom: 15px; display: flex; align-items: flex-start; gap: 15px;">
+    <div class="obsah-sekcia" style="margin-bottom: 25px; display: flex; align-items: flex-start; gap: 15px;">
         <i class="fas fa-crosshairs" style="color: var(--army-olive); margin-top: 5px;"></i> 
         <div>
             <strong>3. Streľba v reálnych podmienkach</strong><br>
             <span style="font-size: 0.9rem; color: var(--text-secondary);">Tréning streľby v obmedzenom priestore, z využitia krytu a pozícií, ktoré situácia vyžaduje.</span>
         </div>
     </div>
+
+    <h4 style="color: var(--army-olive); letter-spacing: 1px;"><i class="fas fa-bullseye"></i> CIEĽOM STRELECKO-TAKTICKÉHO KURZU JE:</h4>
+    <ul style="margin-bottom: 30px; list-style-type: none; padding-left: 0;">
+        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Zvýšiť úroveň osobnej bezpečnosti a pripravenosti v prostredí vlastného obydlia.</li>
+        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Naučiť účastníkov reagovať na hrozby rýchlo, efektívne a v súlade s legislatívou.</li>
+        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Zdokonaliť bezpečnú manipuláciu so zbraňou v dynamických situáciách.</li>
+        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Osvojiť si základy taktického pohybu a správneho využívania krytu.</li>
+        <li style="margin-bottom: 8px;"><i class="fas fa-check" style="color: var(--army-olive); font-size: 0.8rem; margin-right: 10px;"></i>Rozvíjať schopnosť rýchleho rozhodovania v krízových momentoch.</li>
+    </ul>
 `;
 
         // --- PRAVÝ PANEL (Registrácia a kapacity) ---
