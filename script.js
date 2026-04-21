@@ -224,7 +224,7 @@ textPanel.innerHTML = `
             <i class="fas fa-exclamation-triangle"></i> DÔLEŽITÉ INFORMÁCIE:
         </h4>
         <p style="margin: 0; font-size: 0.9rem; color: #fff; line-height: 1.4;">
-            KURZ JE URČENÝ PRE <strong>DRŽITEĽOV ZP</strong> A PRE TÝCH, KTORÍ ABSOLVOVALI <strong>KURZ ZÁKLADNÝ</strong>.
+            KURZ JE URČENÝ PRE <strong>DRŽITEĽOV ZP</strong> A PRE TÝCH, KTORÍ ABSOLVOVALI <strong> ZÁKLADNÝ KURZ </strong>.
         </p>
     </div>
 
