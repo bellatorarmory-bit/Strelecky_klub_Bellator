@@ -285,7 +285,7 @@ textPanel.innerHTML = `
                     <div class="termin-item">
                         <div class="termin-info">
                             <i class="far fa-calendar-check"></i>
-                            <span style="display:block;">11. 04. 2026 (Sobota) o 10:00</span>
+                            <span style="display:block;">16. 05. 2026 (Sobota) o 10:00</span>
                             <span style="font-size: 0.8rem; display:block; margin-top: 5px; color: ${volneMesta < 3 ? '#ff4d4d' : '#88b04b'};">
                                 Voľné miesta: <strong>${volneMesta} / 10</strong>
                             </span>
