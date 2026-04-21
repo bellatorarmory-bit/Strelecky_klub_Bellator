@@ -442,20 +442,13 @@ function zobrazitRegistraciu(datum, typ) {
         
         
 <label style="display:block; margin-bottom:5px; font-size: 0.9rem;">Ste členom ŠK Bellator? *</label>
-<select id="reg-clen" onchange="aktualizujCenuVRegistracii('${typ}')" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
+<select id="reg-clen" onchange="aktualizujCenuVRegistracii('domov')" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
     <option value="Nie">Nie, nie som členom</option>
     <option value="Ano">Áno, som členom ŠK Bellator</option>
 </select>
 
-        <div id="cena-v-reg" style="text-align: center; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; color: var(--army-olive);">
-            Cena k úhrade: 123 € 
-        </div>
-
-        <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 25px;">
-    <input type="checkbox" id="souhlas" style="width: 18px; height: 18px; cursor: pointer; accent-color: #8a9a5b;"> 
-    <label for="souhlas" style="color: #bbb; font-size: 0.8rem; cursor: pointer;">
-        Súhlasím s <span onclick="document.getElementById('modalPodmienky').style.display='flex'" style="color: #8a9a5b; text-decoration: underline; font-weight: bold;">podmienkami rezervácie</span> *
-    </label>
+<div id="cena-v-reg" style="text-align: center; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; color: var(--army-olive);">
+    Cena k úhrade: 123 € 
 </div>
         
         <button onclick="odoslatFinalnuRezervaciu('${datum}', '${typ}')" class="btn-main-modern" style="width:100%; margin-bottom: 10px; padding: 12px; background: var(--army-olive); color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
