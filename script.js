@@ -210,7 +210,7 @@ if (typKurzu === 'aktivny_utocnik') {
         const datumKurzu = "16.05.2026"; // Zjednotil som ti ho s textom v paneli, mala si tam 05.05.
 
         // 2. Získame aktuálny počet voľných miest
-        const volneMesta = await zistiVolneMesta(datumKurzu);
+        const volneMesta = await aktualizujVolneMesta(datumKurzu);
         const jePlno = volneMesta <= 0;
 
        // --- ĽAVÝ PANEL (Popis kurzu) ---
