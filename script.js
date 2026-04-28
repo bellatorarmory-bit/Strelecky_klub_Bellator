@@ -97,35 +97,28 @@ wrapper.innerHTML = `
 }
 // --- 2. HLAVNÁ FUNKCIA OTVORENIA DETAILU ---
 async function otvoritDetail(typKurzu) {
-    
-    console.log("Pokúšam sa otvoriť kurz:", typKurzu); // Toto nám povie, či funkcia vôbec beží
+    console.log("Kliknuté na kurz:", typKurzu); // Toto uvidíš v konzole (F12)
+
     const modal = document.getElementById('courseModal');
-    if (!modal) {
-        console.error("Chyba: Element 'courseModal' neexistuje v HTML!");
-        return;
-    }
     const textPanel = document.querySelector('.modal-text');
     const infoPanel = document.querySelector('.modal-info-panel');
 
-    // 1. AKTUALIZÁCIA URL - toto musí byť správne pomenované
-    // Použijeme formát s otazníkom, ten je pre hľadanie spoľahlivejší
-  window.history.pushState(null, '', '#kurz-' + typKurzu);
+    // 1. POISTKA: Ak JS nenájde tieto prvky, vypíše chybu a nespadne
+    if (!modal || !textPanel || !infoPanel) {
+        console.error("CHYBA: V HTML chýba .modal-text alebo .modal-info-panel!");
+        return;
+    }
 
-    // 1. VYČISTENIE PANELOV
-    textPanel.innerHTML = "";
+    // 2. Vyčistenie panelov (aby tam nezostal starý kurz)
+    textPanel.innerHTML = "Načítavam...";
     infoPanel.innerHTML = "";
-
-    // 2. AKTUALIZÁCIA URL (Pre účely propagácie)
-    // Ak niekto klikne na kurz, v adresnom riadku sa zjaví napr. #kurz-zakladny
+    
+    // Nastavenie URL mriežky
     window.history.pushState({kurz: typKurzu}, "", "#kurz-" + typKurzu);
-    modal.style.display = 'flex';
+
+    // 3. LOGIKA PRE JEDNOTLIVÉ KURZY
     
 if (typKurzu === 'aktivny_utocnik') {
-    // --- OBRANA PRED AKTÍVNYM ÚTOČNÍKOM ---
-    textPanel.innerHTML = ` ... `;
-    infoPanel.innerHTML = ` ... `;
-
-    } else if (typKurzu === 'aktivny_utocnik') {
         // --- OBRANA PRED AKTÍVNYM ÚTOČNÍKOM ---
         textPanel.innerHTML = `
             <h2 id="modalTitle">Obrana pred aktívnym útočníkom</h2>
@@ -167,8 +160,8 @@ if (typKurzu === 'aktivny_utocnik') {
             </div>
 
             <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                <i class="fas fa-arrow-left" style="color: #ffffff !important;"></i> 
-                <span style="color: #ffffff !important;">Späť na ponuku</span>
+                <i class="fas fa-arrow-left"></i> 
+                <span>Späť na ponuku</span>
             </button>
             
             <div class="price-tag">110 € <span>vč. DPH</span></div>
@@ -316,6 +309,83 @@ textPanel.innerHTML = `
     <p style="text-align: center; font-size: 0.7rem; color: #666; margin: 10px 0 0 0;">Ceny sú uvedené vrátane DPH</p>
 </div>
         `;
+     } else if (typKurzu === 'zakladny') {
+    // 1. Definovanie dátumu pre tento konkrétny kurz
+    const datumKurzu = "11.04.2026";
+
+    // 2. ZÍSKANIE AKTUÁLNEHO POČTU MIEST Z DATABÁZY
+    // (Použijeme pomocnú funkciu, ktorú pridáme nižšie)
+    const volneMesta = await aktualizujVolneMesta(datumKurzu);
+    const jePlno = volneMesta <= 0;
+        // --- ĽAVÝ PANEL (tvoj pôvodný kód) ---
+        textPanel.innerHTML = `
+            <h2 id="modalTitle">Bezpečná manipulácia a základy streľby (Úroveň 1)</h2>
+            <p style="font-style: italic; color: var(--army-olive); margin-bottom: 20px;">
+                „Pochopenie zbrane začína rešpektom a správnymi návykmi.“
+            </p>
+            <img src="img/HS-zaklad.webp" class="modal-img-small" alt="Základný kurz">
+            <p>Tento kurz je určený pre úplných začiatočníkov a budúcich držiteľov ZP. Naším cieľom nie je len naučiť vás strieľať, ale vybudovať absolútnu istotu v manipulácii.</p>
+            <h4><i class="fas fa-bullseye"></i> ČO VÁS NAUČÍME:</h4>
+            <ul>
+                <li><strong>Štyri základné pravidlá bezpečnosti:</strong> Alfa a omega každého strelca.</li>
+                <li><strong>Konštrukcia a funkcia:</strong> Ako pištoľ skutočne funguje.</li>
+                <li><strong>Správny úchop a postoj:</strong> Základ pre presnú streľbu.</li>
+                <li><strong>Mierenie a práca so spúšťou:</strong> Ako trafiť presne tam, kam sa pozeráte.</li>
+                <li><strong>Drily bez nábojov (Sušenie):</strong> Správne návyky pri nabíjaní a kontrole.</li>
+                <li><strong>Streľba na terč:</strong> Prenesenie teórie do praxe pod dohľadom inštruktora.</li>
+            </ul>
+            <h4><i class="fas fa-info-circle"></i> TECHNICKÉ DETAILY:</h4>
+            <div class="obsah-sekcia"><i class="fas fa-clock"></i> <div><strong>Trvanie:</strong> 3 hodiny</div></div>
+            <div class="obsah-sekcia"><i class="fas fa-briefcase"></i> <div><strong>Vybavenie:</strong> Nemáte vlastnú výstroj? Vhodnú zbraň aj pomôcky si môžete vybrať na mieste.</div></div>
+            <div class="obsah-sekcia"><i class="fas fa-gun"></i> <div><strong>Strelivo:</strong> Vlastné, alebo možnosť zakúpenia priamo na strelnici.</div></div>
+        `;
+
+        // --- PRAVÝ PANEL (Upravený pre registráciu a kapacity) ---
+        infoPanel.innerHTML = `
+            <div id="side-content-wrapper">
+                <div class="info-box-modern">
+                    <i class="fas fa-location-dot"></i>
+                    <span><strong>Miesto výcviku:</strong><br>Strelnica Bellator Trenčín</span>
+                </div>
+                
+                <h4 class="select-title">Dostupné termíny:</h4>
+                <div class="terminy-container">
+                    <div class="termin-item">
+                        <div class="termin-info">
+                            <i class="far fa-calendar-check"></i>
+                            <span style="display:block;">11. 04. 2026 (Sobota) o 10:00</span>
+                            <span style="font-size: 0.8rem; display:block; margin-top: 5px; color: ${volneMesta < 3 ? '#ff4d4d' : '#88b04b'};">
+                                Voľné miesta: <strong>${volneMesta} / 10</strong>
+                            </span>
+                        </div>
+                        <button class="btn-rezervovat" 
+                                ${jePlno ? 'disabled style="background:#444; color:#888; border-color:#444; cursor:not-allowed;"' : ''}
+                                onclick="zobrazitRegistraciu('${datumKurzu}', 'zakladny')">
+                            ${jePlno ? 'OBSADENÉ' : 'Vybrať <i class="fas fa-chevron-right"></i>'}
+                        </button>
+                    </div>
+                </div>
+
+                <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fas fa-arrow-left"></i> 
+                    <span>Späť na ponuku</span>
+                </button>
+                
+                <div style="margin-top: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid #333;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Člen klubu</span>
+        <span style="color: #8a9a5b; font-weight: bold; font-size: 1.4rem;">70 €</span>
+    </div>
+    <div style="height: 1px; background: #333; margin: 10px 0;"></div>
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Bežná cena</span>
+        <span style="color: #fff; font-weight: bold; font-size: 1.4rem;">86 €</span>
+    </div>
+    <p style="text-align: center; font-size: 0.7rem; color: #666; margin: 10px 0 0 0;">Ceny sú uvedené vrátane DPH</p>
+</div>
+        `;
+
+        
  
 
     } else if (typKurzu === 'sutaz_liga' || typKurzu === 'sutaz_tactical') {
@@ -449,6 +519,13 @@ function zobrazitRegistraciu(datum, typ) {
 
 <div id="cena-v-reg" style="text-align: center; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; color: var(--army-olive);">
     Cena k úhrade: 123 € 
+</div>
+        
+       <div style="display: flex; gap: 10px; align-items: center; margin-bottom: 25px;">
+    <input type="checkbox" id="souhlas" style="width: 18px; height: 18px; cursor: pointer; accent-color: #8a9a5b;"> 
+    <label for="souhlas" style="color: #bbb; font-size: 0.8rem; cursor: pointer;">
+        Súhlasím s <span onclick="document.getElementById('modalPodmienky').style.display='flex'" style="color: #8a9a5b; text-decoration: underline; font-weight: bold;">podmienkami rezervácie</span> *
+    </label>
 </div>
         
         <button onclick="odoslatFinalnuRezervaciu('${datum}', '${typ}')" class="btn-main-modern" style="width:100%; margin-bottom: 10px; padding: 12px; background: var(--army-olive); color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
@@ -714,7 +791,7 @@ function zatvoritDetail() {
     // Vyčistíme URL (odstránime #kurz-xxx)
     window.history.pushState({}, "", window.location.pathname);
 }
-async function zistiVolneMesta(datum) {
+async function aktualizujVolneMesta(datum) {
     const { count, error } = await _supabase
         .from('rezervacie')
         .select('*', { count: 'exact', head: true })
@@ -728,7 +805,7 @@ async function zistiVolneMesta(datum) {
     const maximalnaKapacita = 10;
     return maximalnaKapacita - (count || 0);
 }
-async function zistiVolneMesta(datum) {
+async function aktualizujVolneMesta(datum) {
     try {
         const { count, error } = await _supabase
             .from('rezervacie')
