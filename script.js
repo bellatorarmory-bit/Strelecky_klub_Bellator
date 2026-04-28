@@ -292,7 +292,7 @@ textPanel.innerHTML = `
                         </div>
                         <button class="btn-rezervovat" 
                                 ${jePlno ? 'disabled style="background:#444; color:#888; border-color:#444; cursor:not-allowed;"' : ''}
-                                onclick="zobrazitRegistraciu('${datumKurzu}', 'zakladny')">
+                                onclick="zobrazitRegistraciu('${datumKurzu}', 'domov')">
                             ${jePlno ? 'OBSADENÉ' : 'Vybrať <i class="fas fa-chevron-right"></i>'}
                         </button>
                     </div>
