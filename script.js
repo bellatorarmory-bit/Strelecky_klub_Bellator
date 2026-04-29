@@ -7,94 +7,11 @@ const kapacity = {
 const SUPABASE_URL = 'https://ihcliqqmqkccymuabakw.supabase.co';
 const SUPABASE_KEY = 'sb_publishable_COnhxm99zSxyQ5sT9qc58w_FxzAZb2D';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-async function aktualizujVolneMesta(datum) {
-    try {
-        // Spýtame sa Supabase na počet riadkov pre tento dátum
-        const { count, error } = await _supabase
-            .from('rezervacie')
-            .select('*', { count: 'exact', head: true })
-            .eq('datum_kurzu', datum);
 
-        if (error) throw error;
+// Definícia aktualizujVolneMesta je nižšie (jedna čistá verzia s try/catch)
 
-        // Výpočet: Maximálna kapacita (10) mínus počet prihlásených
-        const maximalnaKapacita = 10;
-        const aktualnePrihlasenych = count || 0;
-        
-        return maximalnaKapacita - aktualnePrihlasenych;
+// Definícia odoslatFinalnuRezervaciu je nižšie (jedna čistá verzia s validáciou)
 
-    } catch (err) {
-        console.error("Chyba pri načítaní kapacity:", err);
-        return 10; // Ak zlyhá spojenie, vrátime pôvodnú hodnotu
-    }
-}
-// 2. Funkcia na uloženie do DB
-async function odoslatFinalnuRezervaciu(datum, typ) {
-    console.log("Pokus o odoslanie rezervácie..."); // Toto uvidíš v konzole (F12)
-
-    try {
-        // Získanie hodnôt
-        const meno = document.getElementById('reg-meno').value;
-        const priezvisko = document.getElementById('reg-priezvisko').value;
-        const email = document.getElementById('reg-email').value;
-        const telefon = document.getElementById('reg-tel').value;
-        const clen = document.getElementById('reg-clen').value;
-        const suhlas = document.getElementById('souhlas').checked;
-
-        if (!meno || !priezvisko || !email || !suhlas) {
-            alert("Prosím vyplňte povinné údaje a zaškrtnite súhlas.");
-            return;
-        }
-
-        console.log("Dáta pripravené, posielam do Supabase...");
-
-        // Uloženie do Supabase
-        const { data, error } = await _supabase
-            .from('rezervacie')
-            .insert([
-                { 
-                    meno: meno, 
-                    priezvisko: priezvisko, 
-                    email: email, 
-                    telefon: telefon,
-                    clen_klubu: clen,
-                    datum_kurzu: datum,
-                    typ_kurzu: typ
-                }
-            ]);
-
-        if (error) throw error; // Ak je chyba v DB, skočí to do sekcie catch
-
-        // Zobrazenie poďakovania
-        // Toto vlož namiesto toho alertu:
-const wrapper = document.getElementById('side-content-wrapper');
-wrapper.innerHTML = `
-    <div style="text-align: center; padding: 40px 20px; animation: fadeIn 0.5s;">
-        <i class="fas fa-check-circle" style="font-size: 5rem; color: #8a9a5b; margin-bottom: 25px;"></i>
-        <h2 style="color: #fff; margin-bottom: 15px; font-family: 'Rajdhani', sans-serif; text-transform: uppercase;">Rezervácia prijatá</h2>
-        
-        <p style="color: #ccc; line-height: 1.6; margin-bottom: 20px;">
-            Ďakujeme, <strong>${meno}</strong>. Vaše miesto na kurz sme úspešne zaregistrovali.
-        </p>
-
-        <div style="background: rgba(138, 154, 91, 0.1); border: 1px solid #8a9a5b; padding: 15px; border-radius: 8px; margin-bottom: 30px; text-align: left;">
-            <p style="color: #ddd; font-size: 0.9rem; margin: 0;">
-                <i class="fas fa-info-circle" style="color: #8a9a5b; margin-right: 8px;"></i>
-                Podrobné informácie k výstroji a <strong>podklady k platbe</strong> sme vám práve odoslali na mail <strong>${email}</strong>.
-            </p>
-        </div>
-
-        <button onclick="zatvoritDetail()" style="width: 100%; padding: 15px; background: #8a9a5b; color: #fff; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; text-transform: uppercase; letter-spacing: 2px;">
-            ROZUMIEM
-        </button>
-    </div>
-`;
-
-    } catch (err) {
-        console.error("CHYBA:", err);
-        alert("Nastal problém: " + err.message);
-    }
-}
 // --- 2. HLAVNÁ FUNKCIA OTVORENIA DETAILU ---
 async function otvoritDetail(typKurzu) {
     console.log("Kliknuté na kurz:", typKurzu); // Toto uvidíš v konzole (F12)
@@ -197,6 +114,85 @@ if (typKurzu === 'aktivny_utocnik') {
                 <li>Schopnosť správne reagovať v kritických situáciách.</li>
                 <li>Praktické postupy použiteľné v reálnom živote.</li>
             </ul>
+        `;
+        infoPanel.innerHTML = `
+            <div id="side-content-wrapper">
+                <div class="info-box-modern">
+                    <i class="fas fa-location-dot"></i>
+                    <span><strong>Miesto výcviku:</strong><br>Strelnica Bellator Trenčín</span>
+                </div>
+
+                <h4 class="select-title">Nadchádzajúce termíny:</h4>
+                <div style="background: rgba(138, 154, 91, 0.08); border: 1px dashed var(--army-olive); border-radius: 8px; padding: 18px; text-align: center; margin-bottom: 15px;">
+                    <i class="fas fa-calendar-plus" style="font-size: 1.6rem; color: var(--army-olive); margin-bottom: 10px; display: block;"></i>
+                    <p style="color: #fff; font-weight: bold; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 1px;">Pripravujeme nové termíny</p>
+                    <p style="color: #aaa; font-size: 0.85rem; margin: 0;">Sledujte nás alebo nás kontaktujte pre viac informácií.</p>
+                </div>
+
+                <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Späť na ponuku</span>
+                </button>
+
+                <div style="margin-top: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid #333;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Člen klubu</span>
+                        <span style="color: #8a9a5b; font-weight: bold; font-size: 1.4rem;">130 €</span>
+                    </div>
+                    <div style="height: 1px; background: #333; margin: 10px 0;"></div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Bežná cena</span>
+                        <span style="color: #fff; font-weight: bold; font-size: 1.4rem;">150 €</span>
+                    </div>
+                    <p style="text-align: center; font-size: 0.7rem; color: #666; margin: 10px 0 0 0;">Ceny sú uvedené vrátane DPH</p>
+                </div>
+            </div>
+        `;
+        } else if (typKurzu === 'civil') {
+        // --- CIVILNÁ PRIPRAVENOSŤ ---
+        textPanel.innerHTML = `
+            <h2 id="modalTitle">Civilná pripravenosť na mimoriadne situácie</h2>
+            <img src="img/HS-civil.jpg" class="modal-img-small" alt="Civilná pripravenosť">
+
+            <p style="color: var(--army-olive); font-weight: bold; text-transform: uppercase; letter-spacing: 1px;">Komplexný prípravný kurz</p>
+
+            <p>Kurz je zameraný na komplexnú prípravu civilných osôb na zvládnutie krízových situácií — od evakuácie a prežitia v mestskom prostredí až po základy taktickej medicíny a komunikácie v núdzi.</p>
+
+            <div style="background: rgba(138, 154, 91, 0.1); border: 1px dashed var(--army-olive); padding: 15px; margin-bottom: 25px; border-radius: 8px;">
+                <h4 style="color: var(--army-olive); margin-top: 0; font-size: 0.9rem; letter-spacing: 1px;">
+                    <i class="fas fa-info-circle"></i> INFORMÁCIA:
+                </h4>
+                <p style="margin: 0; font-size: 0.9rem; color: #fff; line-height: 1.4;">
+                    Obsah kurzu momentálne finalizujeme. Pridajte sa na náš newsletter alebo sledujte sociálne siete.
+                </p>
+            </div>
+
+            <h4><i class="fas fa-bullseye"></i> ZAMERANIE KURZU:</h4>
+            <div class="obsah-sekcia"><div><i class="fas fa-map-signs"></i> Evakuácia a orientácia v mestskom prostredí.</div></div>
+            <div class="obsah-sekcia"><div><i class="fas fa-kit-medical"></i> Základy taktickej medicíny a prvej pomoci.</div></div>
+            <div class="obsah-sekcia"><div><i class="fas fa-water"></i> Prežitie bez bežnej infraštruktúry (voda, jedlo, teplo).</div></div>
+            <div class="obsah-sekcia"><div><i class="fas fa-walkie-talkie"></i> Komunikácia a koordinácia v krízových situáciách.</div></div>
+            <div class="obsah-sekcia"><div><i class="fas fa-shield-halved"></i> Ochrana rodiny a domácnosti pri mimoriadnych udalostiach.</div></div>
+        `;
+        infoPanel.innerHTML = `
+            <div id="side-content-wrapper">
+                <div class="info-box-modern">
+                    <i class="fas fa-location-dot"></i>
+                    <span><strong>Miesto výcviku:</strong><br>Strelnica Bellator Trenčín</span>
+                </div>
+
+                <h4 class="select-title">Nadchádzajúce termíny:</h4>
+                <div style="background: rgba(138, 154, 91, 0.08); border: 1px dashed var(--army-olive); border-radius: 8px; padding: 18px; text-align: center; margin-bottom: 15px;">
+                    <i class="fas fa-calendar-plus" style="font-size: 1.6rem; color: var(--army-olive); margin-bottom: 10px; display: block;"></i>
+                    <p style="color: #fff; font-weight: bold; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 1px;">Pripravujeme nové termíny</p>
+                    <p style="color: #aaa; font-size: 0.85rem; margin: 0;">Sledujte nás alebo nás kontaktujte pre viac informácií.</p>
+                </div>
+
+                <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Späť na ponuku</span>
+                </button>
+            </div>
         `;
         } else if (typKurzu === 'domov') {
         // 1. Definujeme dátum pre tento kurz
@@ -310,13 +306,6 @@ textPanel.innerHTML = `
 </div>
         `;
      } else if (typKurzu === 'zakladny') {
-    // 1. Definovanie dátumu pre tento konkrétny kurz
-    const datumKurzu = "11.04.2026";
-
-    // 2. ZÍSKANIE AKTUÁLNEHO POČTU MIEST Z DATABÁZY
-    // (Použijeme pomocnú funkciu, ktorú pridáme nižšie)
-    const volneMesta = await aktualizujVolneMesta(datumKurzu);
-    const jePlno = volneMesta <= 0;
         // --- ĽAVÝ PANEL (tvoj pôvodný kód) ---
         textPanel.innerHTML = `
             <h2 id="modalTitle">Bezpečná manipulácia a základy streľby (Úroveň 1)</h2>
@@ -340,49 +329,56 @@ textPanel.innerHTML = `
             <div class="obsah-sekcia"><i class="fas fa-gun"></i> <div><strong>Strelivo:</strong> Vlastné, alebo možnosť zakúpenia priamo na strelnici.</div></div>
         `;
 
-        // --- PRAVÝ PANEL (Upravený pre registráciu a kapacity) ---
+        // --- PRAVÝ PANEL ---
         infoPanel.innerHTML = `
             <div id="side-content-wrapper">
                 <div class="info-box-modern">
                     <i class="fas fa-location-dot"></i>
                     <span><strong>Miesto výcviku:</strong><br>Strelnica Bellator Trenčín</span>
                 </div>
-                
-                <h4 class="select-title">Dostupné termíny:</h4>
+
+                <h4 class="select-title">Nadchádzajúce termíny:</h4>
+
+                <div style="background: rgba(138, 154, 91, 0.08); border: 1px dashed var(--army-olive); border-radius: 8px; padding: 18px; text-align: center; margin-bottom: 15px;">
+                    <i class="fas fa-calendar-plus" style="font-size: 1.6rem; color: var(--army-olive); margin-bottom: 10px; display: block;"></i>
+                    <p style="color: #fff; font-weight: bold; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 1px;">Pripravujeme nové termíny</p>
+                    <p style="color: #aaa; font-size: 0.85rem; margin: 0;">Sledujte nás alebo nás kontaktujte pre viac informácií.</p>
+                </div>
+
+                <h4 class="select-title" style="margin-top: 20px; color: #666; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">
+                    <i class="fas fa-history" style="margin-right: 6px;"></i> Prebehnuté termíny
+                </h4>
                 <div class="terminy-container">
-                    <div class="termin-item">
+                    <div class="termin-item" style="opacity: 0.5;">
                         <div class="termin-info">
-                            <i class="far fa-calendar-check"></i>
-                            <span style="display:block;">11. 04. 2026 (Sobota) o 10:00</span>
-                            <span style="font-size: 0.8rem; display:block; margin-top: 5px; color: ${volneMesta < 3 ? '#ff4d4d' : '#88b04b'};">
-                                Voľné miesta: <strong>${volneMesta} / 10</strong>
+                            <i class="fas fa-calendar-check" style="color: #666;"></i>
+                            <span style="display:block; text-decoration: line-through; color: #888;">11. 04. 2026 (Sobota) o 10:00</span>
+                            <span style="font-size: 0.8rem; display:block; margin-top: 5px; color: #666;">
+                                Kurz sa konal
                             </span>
                         </div>
-                        <button class="btn-rezervovat" 
-                                ${jePlno ? 'disabled style="background:#444; color:#888; border-color:#444; cursor:not-allowed;"' : ''}
-                                onclick="zobrazitRegistraciu('${datumKurzu}', 'zakladny')">
-                            ${jePlno ? 'OBSADENÉ' : 'Vybrať <i class="fas fa-chevron-right"></i>'}
-                        </button>
+                        <span style="background: #333; color: #666; padding: 6px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; white-space: nowrap;">PREBEHOL</span>
                     </div>
                 </div>
 
                 <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
-                    <i class="fas fa-arrow-left"></i> 
+                    <i class="fas fa-arrow-left"></i>
                     <span>Späť na ponuku</span>
                 </button>
-                
+
                 <div style="margin-top: 20px; background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border: 1px solid #333;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Člen klubu</span>
-        <span style="color: #8a9a5b; font-weight: bold; font-size: 1.4rem;">70 €</span>
-    </div>
-    <div style="height: 1px; background: #333; margin: 10px 0;"></div>
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Bežná cena</span>
-        <span style="color: #fff; font-weight: bold; font-size: 1.4rem;">86 €</span>
-    </div>
-    <p style="text-align: center; font-size: 0.7rem; color: #666; margin: 10px 0 0 0;">Ceny sú uvedené vrátane DPH</p>
-</div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Člen klubu</span>
+                        <span style="color: #8a9a5b; font-weight: bold; font-size: 1.4rem;">70 €</span>
+                    </div>
+                    <div style="height: 1px; background: #333; margin: 10px 0;"></div>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span style="color: #aaa; font-size: 0.85rem; text-transform: uppercase;">Bežná cena</span>
+                        <span style="color: #fff; font-weight: bold; font-size: 1.4rem;">86 €</span>
+                    </div>
+                    <p style="text-align: center; font-size: 0.7rem; color: #666; margin: 10px 0 0 0;">Ceny sú uvedené vrátane DPH</p>
+                </div>
+            </div>
         `;
 
         
@@ -481,9 +477,62 @@ function otvoritModalVseobecny(typ) {
             </a>
             <button onclick="zatvoritDetail()" style="background:transparent; border:1px solid #fff; color:#fff; width:100%; margin-top:15px; padding:10px; cursor:pointer;">ZAVRIEŤ</button>
         `;
+
+    } else if (typ === 'stanovy') {
+
+        textPanel.innerHTML = `
+            <div class="stanovy-header" style="border-bottom: 2px solid var(--army-olive); margin-bottom: 20px; padding-bottom: 10px;">
+                <h2 style="margin:0; color: #ffffff;">STANOVY</h2>
+                <p style="color: var(--army-olive); font-weight: bold; margin: 5px 0 0 0;">Strelecký klub Bellator o.z.</p>
+            </div>
+            
+            <div class="stanovy-content" style="text-align: justify; font-size: 0.9rem; line-height: 1.6; color: #eee; padding-right: 15px;">
+                <p style="font-style: italic; font-size: 0.8rem; color: #aaa;">Založené v súlade so zákonom č. 83/1990 Zb. o združovaní občanov.</p>
+
+                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px;">Článok 1: Názov, sídlo a postavenie</h3>
+                <p><strong>1.1.</strong> Názov občianskeho združenia je: <strong>Strelecký klub Bellator o.z.</strong></p>
+                <p><strong>1.2.</strong> Sídlo združenia: <strong>Hurbanova 1592/40, 911 01 Trenčín</strong>.</p>
+                <p><strong>1.3.</strong> Združenie je nezávislá, samostatná právnická osoba.</p>
+
+                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 2: Ciele združenia</h3>
+                <p>Hlavným cieľom je presadzovať záujmy streleckého športu, podporovať všestranný rozvoj športovej streľby a spoluprácu so streleckými organizáciami.</p>
+                <ul style="list-style-type: none; padding-left: 0;">
+                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Odborné poradenstvo a výcvik so zbraňou.</li>
+                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Realizácia kurzov a práca s mládežou.</li>
+                </ul>
+
+                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 3: Členstvo</h3>
+                <p><strong>3.5.</strong> Členstvo vzniká prijatím Výkonnou radou na základe písomnej žiadosti a zaplatení členského poplatku.</p>
+                
+                <div style="margin-top: 30px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 5px; font-size: 0.8rem;">
+                    <p>Schválené dňa: <strong>07.12.2025</strong><br>Miesto: Trenčín</p>
+                </div>
+            </div>
+        `;
+
+        infoPanel.innerHTML = `
+            <div class="info-box-modern" style="border-color: var(--army-olive); background: rgba(138, 154, 91, 0.1); padding: 15px; border-radius: 8px; text-align: center;">
+                <i class="fas fa-file-alt" style="color: #ffffff; font-size: 1.5rem; margin-bottom: 5px;"></i><br>
+                <span style="color: #ffffff;"><strong>Formát:</strong><br>PDF Dokument</span>
+            </div>
+            
+            <p style="font-size: 0.9rem; color: #ffffff; margin: 20px 0; line-height: 1.4; text-align: center;">
+                Tento text slúži na oboznámenie sa s pravidlami klubu.
+            </p>
+            
+            <a href="docs/stanovy_bellator_info.pdf" target="_blank" class="btn-main-modern" style="text-decoration: none; width: 100%; display: flex; justify-content: center; align-items: center; background: var(--army-olive); color: #ffffff !important; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">
+                <span>OTVORIŤ STANOVY</span>
+                <i class="fas fa-file-pdf" style="margin-left: 10px;"></i>
+            </a>
+
+            <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold;">
+                ZATVORIŤ
+            </button>
+        `;
     }
 
     modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
 }
 
 // --- 3. POMOCNÉ FUNKCIE PRE KURZY ---
@@ -512,7 +561,7 @@ function zobrazitRegistraciu(datum, typ) {
         
         
 <label style="display:block; margin-bottom:5px; font-size: 0.9rem;">Ste členom ŠK Bellator? *</label>
-<select id="reg-clen" onchange="aktualizujCenuVRegistracii('domov')" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
+<select id="reg-clen" onchange="aktualizujCenuVRegistracii('${typ}')" style="margin-bottom:15px; width:100%; padding: 8px; background: #111; color: #fff; border: 1px solid #444; border-radius: 4px;">
     <option value="Nie">Nie, nie som členom</option>
     <option value="Ano">Áno, som členom ŠK Bellator</option>
 </select>
@@ -567,15 +616,6 @@ function aktualizujCenuVRegistracii(typ) {
     // Ak pridáš ďalšie kurzy, pridáš len ďalšie "else if"
 
     // Samotné zobrazenie ceny
-    if (clen === 'Ano') {
-        cenaDisplay.innerText = `Cena k úhrade: ${cenaClen} €`;
-    } else {
-        cenaDisplay.innerText = `Cena k úhrade: ${cenaBezna} €`;
-    }
-
-
-    // Pridaj ďalšie else if pre iné kurzy (auto, utocnik atď.)
-
     if (clen === 'Ano') {
         cenaDisplay.innerText = `Cena k úhrade: ${cenaClen} €`;
     } else {
@@ -781,30 +821,15 @@ async function odoslatFinalnuRezervaciu(datum, typ) {
     document.body.style.overflow = "hidden";
 }
 function zatvoritDetail() {
-    window.history.pushState({}, '', window.location.pathname);
     const modal = document.getElementById('courseModal');
     if (modal) {
-        modal.style.display = "none"; // Skryje celý čierny panel
+        modal.style.display = "none";
     }
-    document.body.style.overflow = "auto"; // Vráti možnosť skrolovania stránky
-    
+    document.body.style.overflow = "auto";
     // Vyčistíme URL (odstránime #kurz-xxx)
     window.history.pushState({}, "", window.location.pathname);
 }
-async function aktualizujVolneMesta(datum) {
-    const { count, error } = await _supabase
-        .from('rezervacie')
-        .select('*', { count: 'exact', head: true })
-        .eq('datum_kurzu', datum);
-
-    if (error) {
-        console.error("Chyba pri počítaní:", error);
-        return 10; // Ak je chyba, vrátime predvolených 10
-    }
-    
-    const maximalnaKapacita = 10;
-    return maximalnaKapacita - (count || 0);
-}
+// Spustí sa automaticky pri načítaní stránky
 async function aktualizujVolneMesta(datum) {
     try {
         const { count, error } = await _supabase
@@ -814,14 +839,13 @@ async function aktualizujVolneMesta(datum) {
 
         if (error) throw error;
 
-        const maximalnaKapacita = 10;
-        return maximalnaKapacita - (count || 0);
+        const MAX_KAPACITA = 10;
+        return MAX_KAPACITA - (count || 0);
     } catch (err) {
         console.error("Chyba pri načítaní kapacity:", err);
         return 10;
     }
 }
-// Spustí sa automaticky pri načítaní stránky
 // TOTO ZABEZPEČÍ OTVORENIE PRI NAČÍTANÍ STRÁNKY
 window.addEventListener('popstate', (event) => {
     // Ak používateľ klikne na tlačidlo "Späť" v prehliadači
@@ -863,3 +887,29 @@ window.addEventListener('load', checkUrlHash);
 
 // Spusti kontrolu, ak niekto klikne na tlačidlo "Späť" alebo zmení hash ručne
 window.addEventListener('hashchange', checkUrlHash);
+
+// Zatvorenie modalu klávesou Escape
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        const modal = document.getElementById('courseModal');
+        if (modal && modal.style.display === 'flex') {
+            zatvoritDetail();
+        }
+        const podmienky = document.getElementById('modalPodmienky');
+        if (podmienky && podmienky.style.display === 'flex') {
+            podmienky.style.display = 'none';
+        }
+    }
+});
+
+// Zatvorenie modalu kliknutím na tmavé pozadie
+document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('courseModal');
+    if (modal) {
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                zatvoritDetail();
+            }
+        });
+    }
+});

@@ -26,23 +26,6 @@ body {
 }
 
 /* --- 3. NAVIGÁCIA --- */
-.navbar {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background: rgba(18, 18, 18, 0.95);
-    z-index: 3000;
-    border-bottom: 1px solid var(--army-olive);
-}
-
-.nav-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-}
 
 .logo {
     font-family: 'Arial Black', sans-serif;
@@ -705,30 +688,6 @@ body {
     justify-content: center;
 }
 
-.btn-hero-primary {
-    background-color: var(--army-olive); /* Použije tvoju definovanú olivovú */
-    color: #000 !important; /* Čierny text pre dobrý kontrast */
-    padding: 15px 35px;
-    font-size: 1.1rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    text-decoration: none;
-    border-radius: 5px;
-    letter-spacing: 1.5px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    border: 2px solid var(--army-olive);
-}
-
-.btn-hero-primary:hover {
-    background-color: transparent;
-    color: var(--army-olive) !important;
-    transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(138, 154, 91, 0.4);
-}
 /* Automatické pridanie "Úroveň 1" nad nadpis v prvej karte */
 .card:first-child .card-content h3::before {
     content: "ÚROVEŇ 1";
