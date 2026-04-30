@@ -12,6 +12,21 @@ const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // Definícia odoslatFinalnuRezervaciu je nižšie (jedna čistá verzia s validáciou)
 
+// --- 1. HAMBURGER MENU ---
+function toggleMenu() {
+    const nav = document.getElementById('navLinks');
+    nav.classList.toggle('active');
+}
+
+// Zatvorí menu po kliknutí na link (mobile)
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('#navLinks a').forEach(link => {
+        link.addEventListener('click', () => {
+            document.getElementById('navLinks').classList.remove('active');
+        });
+    });
+});
+
 // --- 2. HLAVNÁ FUNKCIA OTVORENIA DETAILU ---
 async function otvoritDetail(typKurzu) {
     console.log("Kliknuté na kurz:", typKurzu); // Toto uvidíš v konzole (F12)
