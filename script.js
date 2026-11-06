@@ -1,7 +1,8 @@
 const kapacity = {
     "11.04.2026": 10,
     "16.05.2026": 10,
-    "13.04.2026": 10
+    "13.04.2026": 10,
+    "28.11.2026": 10
     
 };
 // 1. Inicializácia (Doplň svoje údaje zo Settings -> API)
@@ -243,7 +244,7 @@ if (typKurzu === 'aktivny_utocnik') {
         `;
         } else if (typKurzu === 'domov') {
         // 1. Definujeme dátum pre tento kurz
-        const datumKurzu = "16.05.2026"; // Zjednotil som ti ho s textom v paneli, mala si tam 05.05.
+        const datumKurzu = "28.11.2026";
 
         // 2. Získame aktuálny počet voľných miest
         const volneMesta = await aktualizujVolneMesta(datumKurzu);
@@ -321,7 +322,7 @@ textPanel.innerHTML = `
                     <div class="termin-item">
                         <div class="termin-info">
                             <i class="far fa-calendar-check"></i>
-                            <span style="display:block;">16. 05. 2026 (Sobota) o 10:00</span>
+                            <span style="display:block;">28. 11. 2026 (Sobota) o 10:00</span>
                             <span style="font-size: 0.8rem; display:block; margin-top: 5px; color: ${volneMesta < 3 ? '#ff4d4d' : '#88b04b'};">
                                 Voľné miesta: <strong>${volneMesta} / 10</strong>
                             </span>
@@ -331,6 +332,22 @@ textPanel.innerHTML = `
                                 onclick="zobrazitRegistraciu('${datumKurzu}', 'domov')">
                             ${jePlno ? 'OBSADENÉ' : 'Vybrať <i class="fas fa-chevron-right"></i>'}
                         </button>
+                    </div>
+                </div>
+
+                <h4 class="select-title" style="margin-top: 20px; color: #666; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px;">
+                    <i class="fas fa-history" style="margin-right: 6px;"></i> Prebehnuté termíny
+                </h4>
+                <div class="terminy-container">
+                    <div class="termin-item" style="opacity: 0.5;">
+                        <div class="termin-info">
+                            <i class="fas fa-calendar-check" style="color: #666;"></i>
+                            <span style="display:block; text-decoration: line-through; color: #888;">16. 05. 2026 (Sobota) o 10:00</span>
+                            <span style="font-size: 0.8rem; display:block; margin-top: 5px; color: #666;">
+                                Kurz sa konal
+                            </span>
+                        </div>
+                        <span style="background: #333; color: #666; padding: 6px 12px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; white-space: nowrap;">PREBEHOL</span>
                     </div>
                 </div>
 
@@ -632,6 +649,8 @@ function zobrazitRegistraciu(datum, typ) {
             Späť
         </button>
     `;
+
+    aktualizujCenuVRegistracii(typ);
 }
 
 // TÚTO FUNKCIU PRIDAJ NIEKDE DO SCRIPT.JS
@@ -722,150 +741,6 @@ async function odoslatFinalnuRezervaciu(datum, typ) {
         alert("Nepodarilo sa odoslať dáta: " + err.message);
     }
 
-
-
-
-
-    if (typ === 'stanovy') {
-        // --- SEKCIA STANOVY ---
-        textPanel.innerHTML = `
-            <div class="stanovy-header" style="border-bottom: 2px solid var(--army-olive); margin-bottom: 20px; padding-bottom: 10px;">
-                <h2 style="margin:0; color: #ffffff;">STANOVY</h2>
-                <p style="color: var(--army-olive); font-weight: bold; margin: 5px 0 0 0;">Strelecký klub Bellator o.z.</p>
-            </div>
-            
-            <div class="stanovy-content" style="text-align: justify; font-size: 0.9rem; line-height: 1.6; color: #eee; max-height: 60vh; overflow-y: auto; padding-right: 15px;">
-                <p style="font-style: italic; font-size: 0.8rem; color: #aaa;">Založené v súlade so zákonom č. 83/1990 Zb. o združovaní občanov.</p>
-
-                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px;">Článok 1: Názov, sídlo a postavenie</h3>
-                <p><strong>1.1.</strong> Názov občianskeho združenia je: <strong>Strelecký klub Bellator o.z.</strong></p>
-                <p><strong>1.2.</strong> Sídlo združenia: <strong>Hurbanova 1592/40, 911 01 Trenčín</strong>.</p>
-                <p><strong>1.3.</strong> Združenie je nezávislá, samostatná právnická osoba.</p>
-
-                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 2: Ciele združenia</h3>
-                <p>Hlavným cieľom je presadzovať záujmy streleckého športu, podporovať všestranný rozvoj športovej streľby a spoluprácu so streleckými organizáciami.</p>
-                <ul style="list-style-type: none; padding-left: 0;">
-                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Odborné poradenstvo a výcvik so zbraňou.</li>
-                    <li><i class="fas fa-check" style="color: var(--army-olive); margin-right: 8px;"></i> Realizácia kurzov a práca s mládežou.</li>
-                </ul>
-
-                <h3 style="color: var(--army-olive); border-left: 3px solid var(--army-olive); padding-left: 10px; margin-top: 25px;">Článok 3: Členstvo</h3>
-                <p><strong>3.5.</strong> Členstvo vzniká prijatím Výkonnou radou na základe písomnej žiadosti a zaplatení členského poplatku.</p>
-                
-                <div style="margin-top: 30px; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 5px; font-size: 0.8rem;">
-                    <p>Schválené dňa: <strong>07.12.2025</strong><br>Miesto: Trenčín</p>
-                </div>
-            </div>
-        `;
-
-        infoPanel.innerHTML = `
-            <div class="info-box-modern" style="border-color: var(--army-olive); background: rgba(138, 154, 91, 0.1); padding: 15px; border-radius: 8px; text-align: center;">
-                <i class="fas fa-file-alt" style="color: #ffffff; font-size: 1.5rem; margin-bottom: 5px;"></i><br>
-                <span style="color: #ffffff;"><strong>Formát:</strong><br>PDF Dokument</span>
-            </div>
-            
-            <p style="font-size: 0.9rem; color: #ffffff; margin: 20px 0; line-height: 1.4; text-align: center;">
-                Tento text slúži na oboznámenie sa s pravidlami klubu.
-            </p>
-            
-            <a href="docs/stanovy_bellator_info.pdf" target="_blank" class="btn-main-modern" style="text-decoration: none; width: 100%; display: flex; justify-content: center; align-items: center; background: var(--army-olive); color: #ffffff !important; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer;">
-                <span>OTVORIŤ STANOVY</span>
-                <i class="fas fa-file-pdf" style="margin-left: 10px;"></i>
-            </a>    
-
-            <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold;">
-                ZATVORIŤ
-            </button>
-        `;
-
-    } else if (typ === 'clenstvo') {
-        // --- UPRAVENÁ SEKCIA ČLENSTVO S BENEFITMI ---
-        textPanel.innerHTML = `
-            <div class="stanovy-header" style="border-bottom: 2px solid var(--army-olive); margin-bottom: 20px; padding-bottom: 10px;">
-                <h2 style="margin:0; color: #ffffff;">ČLENSTVO V KLUBE</h2>
-                <p style="color: var(--army-olive); font-weight: bold; margin: 5px 0 0 0;">Strelecký klub Bellator o.z.</p>
-            </div>
-            
-            <div class="membership-content" style="color: #ffffff; line-height: 1.6; font-size: 0.95rem;">
-                
-                <div style="background: rgba(138, 154, 91, 0.15); border: 1px solid var(--army-olive); padding: 15px; border-radius: 8px; margin-bottom: 25px;">
-                    <h4 style="color: var(--army-olive); margin-top: 0; display: flex; align-items: center;">
-                        <i class="fas fa-id-card" style="margin-right: 10px;"></i> ČLENSKÝ PRÍSPEVOK A VÝHODY
-                    </h4>
-                    <p style="font-size: 1.1rem; font-weight: bold; margin-bottom: 10px;">Ročný poplatok (365 dní): <span style="color: var(--army-olive);">120 €</span></p>
-                    <ul style="list-style: none; padding-left: 0; margin-bottom: 0;">
-                        <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
-                            <i class="fas fa-star" style="color: var(--army-olive); margin-right: 10px; margin-top: 5px;"></i>
-                            <span><strong>Karta člena:</strong> Každý člen obdrží členskú kartu.</span>
-                        </li>
-                        <li style="margin-bottom: 8px; display: flex; align-items: flex-start;">
-                            <i class="fas fa-check" style="color: var(--army-olive); margin-right: 10px; margin-top: 5px;"></i>
-                            <span><strong>20x voľný vstup:</strong> Nárok na 20 vstupov (30 min.) na dráhu na strelnici <strong>Bellator Armory v Trenčíne</strong>.</span>
-                        </li>
-                        <li style="margin-bottom: 0; display: flex; align-items: flex-start;">
-                            <i class="fas fa-percent" style="color: var(--army-olive); margin-right: 10px; margin-top: 5px;"></i>
-                            <span><strong>Zľava 20%:</strong> Po vyčerpaní kreditov plynule pokračuje zľava na prenájom streleckej dráhy.</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <h4 style="color: var(--army-olive);"><i class="fas fa-clipboard-list"></i> AKO SA STAŤ ČLENOM:</h4>
-<ul style="list-style: none; padding-left: 0; margin-bottom: 25px;">
-    <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-        <i class="fas fa-1" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
-        <div>
-            <strong>Získanie prihlášky:</strong> Tlačivo si môžete stiahnuť v pravom paneli, alebo si ho 
-            <strong>vyžiadať osobne</strong> priamo na recepcii strelnice <strong>Bellator Armory</strong>.
-        </div>
-    </li>
-                    <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                        <i class="fas fa-2" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
-                        <div><strong>Osobné doručenie:</strong> Prihlášku prineste osobne na strelnicu Bellator Armory v Trenčíne.</div>
-                    </li>
-                    <li style="margin-bottom: 12px; display: flex; align-items: flex-start;">
-                        <i class="fas fa-3" style="background: var(--army-olive); color: #000; padding: 4px 8px; border-radius: 50%; margin-right: 12px; font-weight: bold; font-size: 0.75rem;"></i>
-                        <div><strong>Schválenie a karta:</strong> Po posúdení výkonnou radou a zaplatení príspevku vám bude vystavená <strong>karta člena a potvrdenie</strong>.</div>
-                    </li>
-                </ul>
-
-                <h4 style="color: var(--army-olive); border-top: 1px solid #444; margin-top: 25px; padding-top: 15px;">
-                    <i class="fas fa-gavel"></i> ZÁPISNICE ZO ZASADNUTÍ:
-                </h4>
-                <div class="meeting-list" style="display: grid; gap: 10px; margin-top: 10px;">
-                    <div style="background: rgba(255,255,255,0.05); padding: 12px; border-radius: 6px; display: flex; justify-content: space-between; align-items: center; border-left: 3px solid var(--army-olive);">
-                        <div>
-                            <span style="display: block; font-weight: bold;">Zápisnica z členskej schôdze</span>
-                            <span style="font-size: 0.8rem; color: #888;">Dátum: 18.02.2026 | Trenčín</span>
-                        </div>
-                        <a href="docs/zapisnica_2026_2_18.pdf" target="_blank" style="color: var(--army-olive); font-size: 1.2rem;">
-                            <i class="fas fa-file-pdf"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-        `;
-
-        infoPanel.innerHTML = `
-            <div class="info-box-modern" style="background: #2b5797; color: #fff; padding: 20px; border-radius: 8px; text-align: center; border: none;">
-                <i class="fas fa-file-word" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
-                <span style="font-size: 0.8rem; text-transform: uppercase;">Dokument na stiahnutie</span>
-                <div style="font-size: 1.1rem; font-weight: bold; margin: 5px 0;">PRIHLÁŠKA ZA ČLENA</div>
-            </div>
-
-            <a href="docs/Prihlaska_Bellator.docx" download class="btn-main-modern" style="text-decoration: none; width: 100%; display: flex; justify-content: center; align-items: center; background: #ffffff; color: #000 !important; border: none; padding: 15px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 20px;">
-                <span>STIAHNUŤ TLAČIVO</span>
-                <i class="fas fa-download" style="margin-left: 10px;"></i>
-            </a>
-
-            <button onclick="zatvoritDetail()" style="background: transparent; border: 1px solid #ffffff; color: #ffffff !important; width: 100%; margin-top: 15px; padding: 12px; cursor: pointer; border-radius: 6px; font-weight: bold;">
-                ZAVRIEŤ
-            </button>
-        `;
-    }
-
-    // --- TOTO JE DÔLEŽITÉ PRE ZOBRAZENIE MODALU ---
-    modal.style.display = "flex";
-    document.body.style.overflow = "hidden";
 }
 function zatvoritDetail() {
     const modal = document.getElementById('courseModal');
