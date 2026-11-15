@@ -448,6 +448,198 @@ textPanel.innerHTML = `
         
  
 
+    } else if (typKurzu === 'sutaz_advent') {
+        // --- ADVENTNÁ 24KA ---
+        textPanel.innerHTML = `
+            <h2 id="modalTitle">„Adventná 24ka“</h2>
+            <p style="color: var(--army-olive); font-weight: bold; text-transform: uppercase; letter-spacing: 1px; margin-top: -15px;">Propozície streleckej súťaže · Strelecký klub Bellator o.z.</p>
+
+            <div class="adv-hero">
+                <img src="img/sutaz-advent-24ka.png" alt="Adventná 24ka">
+                <div class="adv-hero-caption"><strong>Sobota 12. 12. 2026</strong> · Strelnica Bellator Armory, Stromová 1, Trenčín</div>
+            </div>
+
+            <p>Predvianočná súťaž, ktorá sa skladá z <strong>2 streleckých situácií</strong>. Pre záujemcov o disciplínu <strong>PCC</strong> (pistol caliber carbine) sú pripravené taktiež 2 strelecké situácie. Celkové poradie v kategóriách určí súčet bodov z oboch situácií.</p>
+
+            <h4><i class="fas fa-clock"></i> ČASOVÝ HARMONOGRAM</h4>
+            <ul class="adv-timeline">
+                <li><span class="t">09:00</span><span class="dot"></span><span class="lbl">Registrácia účastníkov<small>pištoľ / PCC · do 09:30</small></span></li>
+                <li><span class="t">10:00</span><span class="dot"></span><span class="lbl">Súťažná streľba<small>do 15:00</small></span></li>
+                <li class="gold"><span class="t">15:30</span><span class="dot"></span><span class="lbl">Vyhlásenie výsledkov</span></li>
+            </ul>
+
+            <h4><i class="fas fa-gun"></i> ZBRANE A VÝSTROJ</h4>
+            <div class="adv-weapons">
+                <div class="adv-weapon">
+                    <h5>PIŠTOĽ (VPi)</h5>
+                    <span class="sub">Krátka samonabíjacia pištoľ</span>
+                    <ul>
+                        <li>Vlastná, alebo zapožičanie na strelnici</li>
+                        <li>Zásobník max. 20 nábojov</li>
+                        <li>Len pevné mieridlá</li>
+                        <li class="no">Kolimátor nie je povolený</li>
+                    </ul>
+                </div>
+                <div class="adv-weapon">
+                    <h5>PCC</h5>
+                    <span class="sub">Karabína kal. 9 mm (napr. GP Stribog)</span>
+                    <ul>
+                        <li>Vlastná, alebo zapožičanie na strelnici</li>
+                        <li>Zásobník max. 20 nábojov</li>
+                        <li>Mieridlá bez obmedzení</li>
+                        <li>Pri pohybe záver v zadnej polohe</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="obsah-sekcia"><i class="fas fa-box"></i><div><strong>Strelivo:</strong> vlastné, prípadne kúpa priamo na strelnici. Pištoľ: <strong>24 ks + 3 ks nástrel</strong> · PCC: <strong>24 ks + 3 ks nástrel</strong>.</div></div>
+            <div class="obsah-sekcia" style="margin-bottom: 30px;"><i class="fas fa-user-shield"></i><div><strong>Opasky a puzdrá:</strong> bez obmedzení.</div></div>
+
+            <h4><i class="fas fa-crosshairs"></i> STRELECKÉ SITUÁCIE</h4>
+
+            <div class="adv-stage">
+                <div class="adv-stage-head">
+                    <span class="adv-stage-num">01</span>
+                    <div><h5>Gongy a terč</h5><small>Na papierový terč až po zasiahnutí oboch gongov</small></div>
+                </div>
+                <div class="adv-stage-meta">
+                    <div><span>Vzdialenosť</span><strong>15 m</strong></div>
+                    <div><span>Čas</span><strong>Neobmedzený</strong></div>
+                    <div><span>Terče</span><strong>3</strong></div>
+                </div>
+                <div class="adv-flow">
+                    <div class="step"><div class="ico-gong"></div><span><b>1.</b>Gong Ø20 cm</span></div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <div class="step"><div class="ico-gong"></div><span><b>2.</b>Gong Ø20 cm</span></div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <div class="step"><div class="ico-target"></div><span><b>3.</b>Medzinárodný pištoľový terč</span></div>
+                </div>
+                <details class="adv-scoring">
+                    <summary>Skórovanie</summary>
+                    <ul>
+                        <li><strong>Papierový terč:</strong> zásahy 1–10 bodov podľa bodového hodnotenia.</li>
+                        <li><strong>Kovový terč:</strong> 10 bodov, hodnotí sa po prevrátení/spadnutí. Pri evidentnom zásahu bez prevrátenia rozhodne po dohode s rozhodcom kontrola zásahu (terče sa po každej streľbe prestriekajú modrou farbou).</li>
+                        <li><span class="pen">Chýbajúci zásah v papierovom terči: −10 bodov.</span></li>
+                        <li><strong>Výpočet:</strong> body z papierového terča + 2× hodnotenie kovového terča − penalizácia.</li>
+                    </ul>
+                </details>
+            </div>
+
+            <div class="adv-stage">
+                <div class="adv-stage-head">
+                    <span class="adv-stage-num">02</span>
+                    <div><h5>Poppery a kývačka</h5><small>Čas limituje pohyb kývačky</small></div>
+                </div>
+                <div class="adv-stage-meta">
+                    <div><span>Vzdialenosť</span><strong>10 m</strong></div>
+                    <div><span>Čas</span><strong>Pohyb kývačky</strong></div>
+                    <div><span>Terče</span><strong>3</strong></div>
+                </div>
+                <div class="adv-flow">
+                    <div class="step"><div class="ico-popper"></div><span><b>1.</b>Popper</span></div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <div class="step"><div class="ico-popper"></div><span><b>2.</b>Popper</span></div>
+                    <i class="fas fa-chevron-right arrow"></i>
+                    <div class="step"><div class="ico-target swing"></div><span><b>3.</b>Kývačka s terčom</span></div>
+                </div>
+                <details class="adv-scoring">
+                    <summary>Skórovanie</summary>
+                    <ul>
+                        <li><strong>Papierový terč:</strong> zásahy 1–10 bodov podľa bodového hodnotenia.</li>
+                        <li><strong>Kovový terč:</strong> 10 bodov, hodnotí sa po prevrátení/spadnutí. Pri evidentnom zásahu bez prevrátenia rozhodne po dohode s rozhodcom kontrola zásahu (terče sa po každej streľbe prestriekajú modrou farbou).</li>
+                        <li><span class="pen">Chýbajúci zásah v papierovom terči: −10 bodov.</span></li>
+                        <li><strong>Výpočet:</strong> body z papierového terča + 2× hodnotenie kovového terča − penalizácia.</li>
+                    </ul>
+                </details>
+            </div>
+
+            <h4><i class="fas fa-trophy"></i> KATEGÓRIE</h4>
+            <div class="adv-cats">
+                <span><i class="fas fa-mars"></i>MUŽI</span>
+                <span><i class="fas fa-venus"></i>ŽENY</span>
+                <span><i class="fas fa-users"></i>OPEN<small>pre kategóriu PCC</small></span>
+            </div>
+
+            <div class="adv-safety">
+                <i class="fas fa-head-side-mask"></i>
+                <div><strong>Ochrana zraku a sluchu je povinná</strong> na všetkých streleckých stanovištiach.</div>
+            </div>
+        `;
+
+        infoPanel.innerHTML = `
+            <div id="side-content-wrapper">
+                <div class="info-box-modern">
+                    <i class="fas fa-calendar-day"></i>
+                    <span><strong>Sobota 12. 12. 2026</strong><br>Registrácia 09:00 – 09:30</span>
+                </div>
+                <div class="info-box-modern">
+                    <i class="fas fa-location-dot"></i>
+                    <span><strong>Strelnica Bellator Armory</strong><br>Stromová 1, Trenčín</span>
+                </div>
+
+                <h4 class="select-title">Do súťaže zostáva:</h4>
+                <div class="adv-mini-cd" data-countdown>
+                    <div><strong data-cd="d">--</strong><span>dní</span></div>
+                    <div><strong data-cd="h">--</strong><span>hod</span></div>
+                    <div><strong data-cd="m">--</strong><span>min</span></div>
+                    <div><strong data-cd="s">--</strong><span>sek</span></div>
+                </div>
+
+                <h4 class="select-title" style="margin-top: 22px;">Štartovné:</h4>
+                <div class="adv-prices" style="margin-top: 0;">
+                    <div><span>Pištoľ (VPi)</span><strong>25 €</strong></div>
+                    <div><span>PCC</span><strong>25 €</strong></div>
+                    <div><span>VPi + PCC<em>VÝHODNÁ KOMBINÁCIA</em></span><strong>35 €</strong></div>
+                </div>
+
+                <h4 class="select-title">Prihláška <span style="color:#777; text-transform:none; letter-spacing:0;">(do 11. 12. 2026)</span></h4>
+                <div class="adv-form">
+                    <div class="row">
+                        <div><label>Meno *</label><input type="text" id="adv-meno"></div>
+                        <div><label>Priezvisko *</label><input type="text" id="adv-priezvisko"></div>
+                    </div>
+                    <label>E-mail *</label><input type="email" id="adv-email">
+                    <label>Telefón *</label><input type="tel" id="adv-tel">
+
+                    <label>Disciplína *</label>
+                    <div class="adv-disc">
+                        <input type="radio" name="adv-disc" id="adv-d1" value="VPi" checked onchange="aktualizujCenuAdvent()"><label for="adv-d1">VPi<small>25 €</small></label>
+                        <input type="radio" name="adv-disc" id="adv-d2" value="PCC" onchange="aktualizujCenuAdvent()"><label for="adv-d2">PCC<small>25 €</small></label>
+                        <input type="radio" name="adv-disc" id="adv-d3" value="VPi + PCC" onchange="aktualizujCenuAdvent()"><label for="adv-d3">OBE<small>35 €</small></label>
+                    </div>
+
+                    <label>Kategória *</label>
+                    <select id="adv-kat">
+                        <option value="Muži">Muži</option>
+                        <option value="Ženy">Ženy</option>
+                    </select>
+
+                    <div class="adv-check">
+                        <input type="checkbox" id="adv-zbran">
+                        <label for="adv-zbran">Potrebujem zapožičať zbraň na strelnici</label>
+                    </div>
+                    <div class="adv-check">
+                        <input type="checkbox" id="adv-suhlas">
+                        <label for="adv-suhlas">Súhlasím so spracovaním osobných údajov za účelom registrácie na súťaž *</label>
+                    </div>
+
+                    <div class="adv-total" id="adv-total">Štartovné: 25 €</div>
+
+                    <button onclick="odoslatPrihlaskuAdvent()" class="btn-advent" style="width:100%; justify-content:center;">
+                        <i class="fas fa-paper-plane"></i> ODOSLAŤ PRIHLÁŠKU
+                    </button>
+                    <p style="font-size: 0.72rem; color: #777; text-align: center; margin: 10px 0 0;">
+                        Prihláška sa odošle e-mailom na <a href="mailto:info@bellatorarmory.sk" style="color: var(--army-olive);">info@bellatorarmory.sk</a>
+                    </p>
+                </div>
+
+                <button onclick="zatvoritDetail()" style="background: transparent; color: #ffffff !important; border: 1px solid #ffffff; margin-top: 20px; width: 100%; cursor: pointer; padding: 12px; border-radius: 6px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 2px; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 10px;">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Späť na stránku</span>
+                </button>
+            </div>
+        `;
+        spustitOdpocet();
+
     } else if (typKurzu === 'sutaz_liga' || typKurzu === 'sutaz_tactical') {
         // Zistíme, na ktorú kartu používateľ klikol, aby sme dali správny nadpis a obrázok
         const jeLiga = typKurzu === 'sutaz_liga';
@@ -835,3 +1027,114 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+// =====================================================
+// ADVENTNÁ 24KA – odpočítavanie a prihláška
+// =====================================================
+const ADVENT_START = new Date('2026-12-12T10:00:00+01:00');
+const ADVENT_DEADLINE = new Date('2026-12-11T23:59:59+01:00');
+const ADVENT_EMAIL = 'info@bellatorarmory.sk';
+
+function spustitOdpocet() {
+    const pad = n => String(n).padStart(2, '0');
+    const diff = ADVENT_START - new Date();
+
+    document.querySelectorAll('[data-countdown]').forEach(box => {
+        if (diff <= 0) {
+            box.classList.add('is-over');
+            box.innerHTML = '<i class="fas fa-flag-checkered"></i> Súťaž sa už konala – ďakujeme všetkým strelcom!';
+            return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor(diff / 3600000) % 24;
+        const m = Math.floor(diff / 60000) % 60;
+        const s = Math.floor(diff / 1000) % 60;
+        const set = (k, v) => { const el = box.querySelector(`[data-cd="${k}"]`); if (el) el.textContent = v; };
+        set('d', d); set('h', pad(h)); set('m', pad(m)); set('s', pad(s));
+    });
+}
+document.addEventListener('DOMContentLoaded', () => {
+    spustitOdpocet();
+    setInterval(spustitOdpocet, 1000);
+});
+
+function aktualizujCenuAdvent() {
+    const disc = document.querySelector('input[name="adv-disc"]:checked')?.value || 'VPi';
+    const cena = disc === 'VPi + PCC' ? 35 : 25;
+    const total = document.getElementById('adv-total');
+    if (total) total.textContent = `Štartovné: ${cena} €`;
+
+    // Kategória OPEN je určená pre PCC
+    const kat = document.getElementById('adv-kat');
+    if (kat) {
+        const maPCC = disc !== 'VPi';
+        let open = kat.querySelector('option[value="Open (PCC)"]');
+        if (maPCC && !open) {
+            open = new Option('Open (PCC)', 'Open (PCC)');
+            kat.add(open);
+        } else if (!maPCC && open) {
+            if (kat.value === open.value) kat.value = 'Muži';
+            open.remove();
+        }
+    }
+    return cena;
+}
+
+function odoslatPrihlaskuAdvent() {
+    const val = id => (document.getElementById(id)?.value || '').trim();
+    const meno = val('adv-meno'), priezvisko = val('adv-priezvisko');
+    const email = val('adv-email'), tel = val('adv-tel');
+    const disc = document.querySelector('input[name="adv-disc"]:checked')?.value || 'VPi';
+    const kat = val('adv-kat');
+    const zbran = document.getElementById('adv-zbran').checked;
+    const suhlas = document.getElementById('adv-suhlas').checked;
+
+    if (new Date() > ADVENT_DEADLINE) {
+        alert('Prihlasovanie na súťaž je už uzavreté (uzávierka bola 11. 12. 2026).');
+        return;
+    }
+    if (!meno || !priezvisko || !email || !tel) {
+        alert('⚠️ Prosím, vyplňte všetky povinné polia.');
+        return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        alert('⚠️ Zadajte platný e-mail.');
+        return;
+    }
+    if (!suhlas) {
+        alert('⚠️ Pre odoslanie prihlášky je potrebný súhlas so spracovaním údajov.');
+        return;
+    }
+
+    const cena = aktualizujCenuAdvent();
+    const predmet = `Prihláška – Adventná 24ka (12.12.2026) – ${meno} ${priezvisko}`;
+    const telo =
+`Dobrý deň,
+
+týmto sa záväzne prihlasujem na streleckú súťaž „Adventná 24ka“ dňa 12.12.2026.
+
+Meno a priezvisko: ${meno} ${priezvisko}
+E-mail: ${email}
+Telefón: ${tel}
+Disciplína: ${disc}
+Kategória: ${kat}
+Zapožičanie zbrane: ${zbran ? 'ÁNO' : 'nie'}
+Štartovné: ${cena} €
+
+S pozdravom
+${meno} ${priezvisko}`;
+
+    window.location.href = `mailto:${ADVENT_EMAIL}?subject=${encodeURIComponent(predmet)}&body=${encodeURIComponent(telo)}`;
+
+    document.getElementById('side-content-wrapper').innerHTML = `
+        <div style="text-align: center; padding: 30px 10px;">
+            <i class="fas fa-envelope-open-text" style="font-size: 3.5rem; color: var(--xmas-gold); margin-bottom: 20px;"></i>
+            <h3 style="color: #fff;">TAKMER HOTOVO!</h3>
+            <p style="color: #ccc;">Otvorili sme vám e-mail s vyplnenou prihláškou. Stačí ho <strong>odoslať</strong>.</p>
+            <p style="color: #888; font-size: 0.85rem;">Ak sa e-mail neotvoril, pošlite prihlášku na<br>
+               <a href="mailto:${ADVENT_EMAIL}" style="color: var(--army-olive); font-weight: bold;">${ADVENT_EMAIL}</a><br>
+               alebo zavolajte na <a href="tel:+421901739192" style="color: var(--army-olive);">+421 901 739 192</a>.</p>
+            <button onclick="zatvoritDetail()" style="margin-top:20px; width:100%; padding:12px; background:#8a9a5b; color:#fff; border:none; border-radius:4px; cursor:pointer; font-weight:bold;">ZAVRIEŤ</button>
+        </div>
+    `;
+}
